@@ -27,10 +27,9 @@ class Database():
         return record
 
     def update_quantity_of_products(self, description, quantity):
-        query = f"UPDATE products SET quantity = 25 WHERE description = '{description}'"
+        query = f"UPDATE products SET quantity = {quantity} WHERE description = '{description}'"
         self.cursor.execute(query)
-        record = self.cursor.fetchall()
-        return record
+        self.connection.commit()
 
     def get_quantity_products(self, products_description):
         query = f"SELECT quantity FROM products WHERE description = '{products_description}'"
