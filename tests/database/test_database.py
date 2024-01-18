@@ -23,3 +23,10 @@ def test_check_user_sergii():
     assert user[0][1] == 'Kyiv'
     assert user[0][2] == '3127'
     assert user[0][3] == 'Ukraine'
+
+@pytest.mark.database
+def test_update_quantity_of_products():
+    db = Database()
+    db.update_quantity_of_products('з цукром', 25)    
+
+    assert db.get_quantity_products('з цукром')[0][0] == 25
