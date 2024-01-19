@@ -44,9 +44,15 @@ class Database():
         return record
 
     def create_new_product(self, id, name, description, quantity):
-        query = f"INSERT INTO products (id, name, description, quantity) \
+        query = f"INSERT OR REPLACE INTO products \
+            (id, name, description, quantity) \
             VALUES ({id}, '{name}', '{description}', {quantity})"
         self.cursor.execute(query)
         self.connection.commit()
         new_product = Database.get_product_by_id(self, id)
         return new_product
+
+    def delete_product(self, id):
+        query = f"DELETE FROM products WHERE id = {id}"
+        self.cursor.execute(query)
+        self.connection.commit

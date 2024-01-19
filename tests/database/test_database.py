@@ -34,4 +34,11 @@ def test_update_quantity_of_products():
 @pytest.mark.database
 def test_create_new_product():
     db = Database()
+    # в результаті отримуємо tuple
     assert db.create_new_product(11, 'печиво', 'солодке', 30)[0][0] == 30
+
+@pytest.mark.database
+def test_delete_product():
+    db = Database()
+    db.delete_product(10)
+    assert db.get_product_by_id(10) == []
