@@ -30,3 +30,9 @@ def test_update_quantity_of_products():
     db.update_quantity_of_products('з цукром', 25)    
 
     assert db.get_quantity_products('з цукром')[0][0] == 25
+
+@pytest.mark.database
+def test_create_new_product():
+    db = Database()
+    db.create_new_product(8, 'печиво', 'солодке', 30)
+    assert db.get_product_by_id(8)[0][0] == 30

@@ -29,10 +29,22 @@ class Database():
     def update_quantity_of_products(self, description, quantity):
         query = f"UPDATE products SET quantity = {quantity} WHERE description = '{description}'"
         self.cursor.execute(query)
-        self.connection.commit()
+        self.connection.commit() # підтвердження змін в базі даних
 
     def get_quantity_products(self, products_description):
         query = f"SELECT quantity FROM products WHERE description = '{products_description}'"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
+
+    def get_product_by_id(self, id):
+        query = f"SELECT quantity FROM products WHERE id = {id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+
+    def create_new_product(self, id, name, description, quantity):
+        query = f"INSERT INTO products (id, name, description, quantity) \
+            VALUES ({id}, '{name}', '{description}', {quantity})"
+        self.cursor.execute(query)
+        self.connection.commit()
