@@ -48,3 +48,5 @@ class Database():
             VALUES ({id}, '{name}', '{description}', {quantity})"
         self.cursor.execute(query)
         self.connection.commit()
+        new_product = Database.get_product_by_id(self, id)
+        return new_product
