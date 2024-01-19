@@ -38,7 +38,8 @@ def test_create_new_product():
     assert db.create_new_product(11, 'печиво', 'солодке', 30)[0][0] == 30
 
 @pytest.mark.database
-def test_delete_product():
+def test_create_and_delete():
     db = Database()
-    db.delete_product(10)
-    assert db.get_product_by_id(10) == []
+    db.create_new_product(20, 'test', 'data', 999)
+    db.delete_product(20)
+    assert db.get_product_by_id(20) == []
