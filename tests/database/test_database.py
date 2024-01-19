@@ -43,3 +43,8 @@ def test_create_and_delete():
     db.create_new_product(20, 'test', 'data', 999)
     db.delete_product(20)
     assert db.get_product_by_id(20) == []
+
+@pytest.mark.database
+def test_list_of_data():
+    db = Database()
+    assert db.get_list_of_data()[0][2] == 'солодка вода'

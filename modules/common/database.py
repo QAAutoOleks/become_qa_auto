@@ -56,3 +56,18 @@ class Database():
         query = f"DELETE FROM products WHERE id = {id}"
         self.cursor.execute(query)
         self.connection.commit
+
+    def get_list_of_data(self):
+        query = f"SELECT \
+            orders.id, \
+            customers.id, \
+            products.name, \
+            products.description, \
+            orders.order_date\
+                FROM orders\
+                    JOIN customers ON orders.customer_id = customers.id\
+                        JOIN products ON orders.product_id = products.id"
+                            #WHERE description = '{data}'"               
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
