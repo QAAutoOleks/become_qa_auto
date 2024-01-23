@@ -47,4 +47,7 @@ def test_create_and_delete():
 @pytest.mark.database
 def test_list_of_data():
     db = Database()
+    assert db.get_list_of_data()[0][0] == 1
+    assert db.get_list_of_data()[0][1] == 1
     assert db.get_list_of_data()[0][2] == 'солодка вода'
+    assert db.get_list_of_data()[0][3] == 'з цукром'
