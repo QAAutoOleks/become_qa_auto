@@ -5,7 +5,7 @@ class Database():
 
     def __init__(self):
         self.connection = sqlite3.connect(
-            r"C:\\Users\\User\\Desktop\\Framework\\Become-QA-Auto" + r"\\become_qa_auto.db")
+            r"C:\\Users\\User\\Desktop\\Framework\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
 
     def test_connection(self):
