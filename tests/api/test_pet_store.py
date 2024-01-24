@@ -2,27 +2,25 @@ import pytest
 
 
 @pytest.mark.api_petstore
-def test_check_post(pet_crud):
-    pet_crud.post_pet_method("Dogs", "Chihuahua")
-    pet_crud.put_pet_method("Boxer")
-    assert pet_crud.get_pet_by_id(1)['category']['name'] == 'Boxer'
-    #assert pet_crud.r_post.status_code == 200    
+def test_check_post(petstore_api):
+    petstore_api.post_pet("Dogs", "Chihuahua")
+    assert petstore_api.get_pet_by_id(1)['category']['name'] == 'Chihuahua'
 
-# @pytest.mark.api_petstore    
-# def test_check_put(pet_crud):
-#     assert pet_crud.r_put.status_code == 200
+    petstore_api.put_pet("Boxer")
+    assert petstore_api.get_pet_by_id(1)['category']['name'] == 'Boxer'
 
-# @pytest.mark.api_petstore
-# def test_get_by_id(pet_crud):
-#     assert pet_crud.r_get_by_id['category']['name'] == 'Mazik'
+    assert petstore_api.delete_pet(1) == 200
+    assert petstore_api.get_pet_by_id(1)['message'] == 'Pet not found'
 
-# @pytest.mark.api_petstore
-# def test_id(pet_crud):
-#     assert pet_crud.id == 4
+    petstore_api.post_pet("Cats", "Bengal")
+    petstore_api.post_pet("Cats", "Persian")
+    petstore_api.post_pet("Cats", "Scottish Fold")
+    assert petstore_api.get_pet_by_id(4)['category']['name'] == 'Scottish Fold'
 
-# @pytest.mark.api_petstore
-# def test_create_list_of_user_with_array(user_crud):
-#     assert user_crud.r_get_user['username'] == 'BobDylan'
+@pytest.mark.api_petstore
+def test_create_list_of_user_with_array(petstore_api):
+    assert petstore_api.create_list_of_users_with_array() == 200
+    #assert user_crud.r_get_user['username'] == 'BobDylan'
 #     # 'id' is joint with 'pet_crud'
 #     assert user_crud.id == 5
 #     assert user_crud.r_login_user.status_code == 200

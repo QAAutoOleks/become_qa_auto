@@ -36,20 +36,10 @@ def github_api():
 
 
 @pytest.fixture
-def pet_crud():
+def petstore_api():
     first_pet = PetStore()
 
     yield first_pet
-
-
-@pytest.fixture
-def user_crud():
-    first_user = PetStore("https://petstore.swagger.io/v2/user/")
-    first_user.create_list_of_users_with_array()
-    first_user.get_user("BobDylan")
-    first_user.login_user("JohnConnor", "123")
-
-    yield first_user
 
 
 @pytest.fixture
