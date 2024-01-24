@@ -24,7 +24,9 @@ class PetStore:
             "tags": [{"id": 0, "name": "string"}],
             "status": "available",
         }
-        self.r_post = requests.post(self.url_pets, json=body)
+        r_post = requests.post(self.url_pets, json=body)
+
+        return r_post.status_code
 
     def put_pet(self, new_name):
         body = {
@@ -35,7 +37,9 @@ class PetStore:
             "tags": [{"id": 0, "name": "string"}],
             "status": "available",
         }
-        self.r_put = requests.put(self.url_pets, json=body)
+        r_put = requests.put(self.url_pets, json=body)
+
+        return r_put.status_code
 
     def get_pet_by_id(self, id):
         r_get_pet = requests.get(self.url_pets + str(id))
@@ -47,7 +51,6 @@ class PetStore:
         r_delete = requests.delete(self.url_pets + str(id))
 
         return r_delete.status_code
-        
 
     def create_list_of_users_with_array(self):
         PetStore.user_id += 2
@@ -81,8 +84,18 @@ class PetStore:
 
         return r_create_list_of_users.status_code
 
-    def get_user(self, user_name):
-        self.r_get_user = requests.get(self.url_user + user_name).json()
+    def put_user_change_email(self, username, new_email):
+        body = self.get_user(username)
+        body['email'] = new_email
+
+        r_put_user = requests.put(self.url_user + username, json=body)
+
+        return r_put_user.status_code
+
+    def get_user(self, username):
+        r_get_user = requests.get(self.url_user + username)
+
+        return r_get_user.json()
 
     def login_user(self, login, password):
         self.r_login_user = requests.get(
@@ -99,8 +112,7 @@ class PetStore:
             "complete": True,
         }
         self.post_order = requests.post(self.base_url + "order", json=body)
-    
+
     def get_order(self):
-        self.r_get_order = requests.get(self.base_url + "order/" + str(self.id))
-
-
+        self.r_get_order = requests.get(
+            self.base_url + "order/" + str(self.id))
