@@ -24,7 +24,7 @@ def test_second_request():
     assert headers['Content-Security-Policy'] == "default-src 'none'"
 
 
-@pytest.mark.swagger_petstore
+@pytest.mark.api_petstore
 def test_swagger():
     base_url = 'https://petstore.swagger.io/v2/swagger.json'
     r = requests.get(base_url)

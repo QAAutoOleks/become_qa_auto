@@ -3,14 +3,15 @@ import requests
 
 
 class PetStore:
+
     id = 0
 
-    def __init__(self, base_url):
-        self.base_url = base_url
+    def __init__(self):
         PetStore.id += 1
         self.id = PetStore.id
+        self.url_pets = 'https://petstore.swagger.io/v2/pet/'
 
-    def post_method(self, name_category, name_of_pet):
+    def post_pet_method(self, name_category, name_of_pet):
         body = {
             "id": self.id,
             "category": {"id": self.id, "name": name_of_pet},
@@ -19,9 +20,9 @@ class PetStore:
             "tags": [{"id": 0, "name": "string"}],
             "status": "available",
         }
-        self.r_post = requests.post(self.base_url, json=body)
+        self.r_post = requests.post(self.url_pets, json=body)
 
-    def put_method(self, new_name):
+    def put_pet_method(self, new_name):
         body = {
             "id": self.id,
             "category": {"id": self.id, "name": new_name},
@@ -30,10 +31,13 @@ class PetStore:
             "tags": [{"id": 0, "name": "string"}],
             "status": "available",
         }
-        self.r_put = requests.put(self.base_url, json=body)
+        self.r_put = requests.put(self.url_pets, json=body)
 
-    def get_by_id(self):
-        self.r_get_by_id = (requests.get(self.base_url + str(self.id))).json()
+    def get_pet_by_id(self, id):
+        r_get_pet_by_id = requests.get(self.url_pets + str(id))
+        r_get_pet_by_id_json = r_get_pet_by_id.json()
+        
+        return r_get_pet_by_id_json
 
     def create_list_of_users_with_array(self):
         body = [
