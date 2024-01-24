@@ -19,6 +19,12 @@ def test_second_request():
     url = r.json()
     headers = r.headers
 
-    assert url['organizations_url'] == 'https://api.github.com/users/defunkt/orgs'
+    assert url['name'] == 'Chris Wanstrath'
     assert r.status_code == 200
-    assert headers['Content-Security-Policy'] == "default-src 'none'"
+    assert headers['Server'] == "GitHub.com"
+    
+
+@pytest.mark.http
+def test_status_code_request():
+    r = requests.get("https://api.github.com/users/sergii_butenko")
+    assert r.status_code == 404

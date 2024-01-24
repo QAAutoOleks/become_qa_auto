@@ -17,6 +17,7 @@ def test_check_post(petstore_api):
     assert petstore_api.post_pet("Cats", "Scottish Fold") == 200
     assert petstore_api.get_pet_by_id(4)['category']['name'] == 'Scottish Fold'
 
+
 @pytest.mark.api_petstore
 def test_create_list_of_user_with_array(petstore_api):
     assert petstore_api.create_list_of_users_with_array() == 200
@@ -26,6 +27,7 @@ def test_create_list_of_user_with_array(petstore_api):
     assert petstore_api.get_user('IvanFranko')['email'] == 'ivan_franko@gmail.com'
 
     assert petstore_api.login_user('HrygoriiSkovoroda', '321') == 200
+
 
 @pytest.mark.api_petstore
 def test_store(petstore_api):

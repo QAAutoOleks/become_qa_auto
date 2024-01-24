@@ -37,16 +37,6 @@ def github_api():
 
 @pytest.fixture
 def petstore_api():
-    first_pet = PetStore()
+    pet_store = PetStore()
 
-    yield first_pet
-
-
-@pytest.fixture
-def store_crud():
-    first_store = PetStore("https://petstore.swagger.io/v2/store/")
-    first_store.post_method("Dogs", "Fur")
-    first_store.post_order()
-    first_store.get_order()
-
-    yield first_store
+    yield pet_store
