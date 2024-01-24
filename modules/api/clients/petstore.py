@@ -6,11 +6,12 @@ class PetStore:
 
     pet_id = 0
     user_id = 0
+    order_id = 0
 
     def __init__(self):
         self.url_pets = 'https://petstore.swagger.io/v2/pet/'
         self.url_user = 'https://petstore.swagger.io/v2/user/'
-        self.url_store = 'https://petstore.swagger.io/v2/store/'
+        self.url_store = 'https://petstore.swagger.io/v2/store/order'
 
     def post_pet(self, name_category, name_of_pet):
         PetStore.pet_id += 1
@@ -98,21 +99,36 @@ class PetStore:
         return r_get_user.json()
 
     def login_user(self, login, password):
-        self.r_login_user = requests.get(
-            self.url_user + "login", params={"username": login, "password": password}
+        r_login_user = requests.get(
+            # self.url_user + "login", params={"username": login, "password": password}
+            self.url_user + "login?username={login}&password={password}"
         )
 
-    def post_order(self):
+        return r_login_user.status_code
+
+    def post_order(self, quantity):
+        PetStore.order_id += 1
+        self.order_id = PetStore.order_id
+
         body = {
-            "id": self.id,
-            "petId": self.id,
-            "quantity": 2,
-            "shipDate": "2024-01-15T17:33:32.207Z",
+            "id": self.order_id,
+            "petId": 0,
+            "quantity": quantity,
+            "shipDate": "2024-01-24T15:17:12.176Z",
             "status": "placed",
             "complete": True,
         }
-        self.post_order = requests.post(self.base_url + "order", json=body)
+        post_order = requests.post(self.url_store, json=body)
 
-    def get_order(self):
-        self.r_get_order = requests.get(
-            self.base_url + "order/" + str(self.id))
+        return post_order.status_code
+
+    def get_order(self, order_id):
+        r_get_order = requests.get(
+            self.url_store + '/' + str(order_id))
+
+        return r_get_order.json()
+
+    def delete_order(self, order_id):
+        r_delete_order = requests.delete(self.url_store + '/' + str(order_id))
+
+        return r_delete_order.status_code
