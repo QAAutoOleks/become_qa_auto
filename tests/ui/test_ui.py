@@ -1,5 +1,4 @@
 import pytest
-import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -16,13 +15,10 @@ def test_check_incorrect_username():
     driver.get("https://github.com/login")
     login_element = driver.find_element(By.ID, 'login_field')
     login_element.send_keys('wrong.data@mail.com')
-    time.sleep(2)
     login_element = driver.find_element(By.ID, 'password')
     login_element.send_keys('wrong_password')
-    time.sleep(2)
     button_element = driver.find_element(By.NAME, 'commit')
     button_element.click()
-    time.sleep(2)
     assert driver.title == 'Sign in to GitHub · GitHub'
 
     driver.close()

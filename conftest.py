@@ -1,5 +1,6 @@
 import pytest
 from modules.api.clients.github import GitHub
+from modules.api.clients.petstore import PetStore
 
 
 class User:
@@ -32,3 +33,33 @@ def github_api():
     api = GitHub()
 
     yield api
+
+
+@pytest.fixture
+def pet_crud():
+    first_pet = PetStore("https://petstore.swagger.io/v2/pet/")
+    first_pet.post_method("Dogs", "Pes")
+    first_pet.put_method("Mazik")
+    first_pet.get_by_id()
+
+    yield first_pet
+
+
+@pytest.fixture
+def user_crud():
+    first_user = PetStore("https://petstore.swagger.io/v2/user/")
+    first_user.create_list_of_users_with_array()
+    first_user.get_user("BobDylan")
+    first_user.login_user("JohnConnor", "123")
+
+    yield first_user
+
+
+@pytest.fixture
+def store_crud():
+    first_store = PetStore("https://petstore.swagger.io/v2/store/")
+    first_store.post_method("Dogs", "Fur")
+    first_store.post_order()
+    first_store.get_order()
+
+    yield first_store
