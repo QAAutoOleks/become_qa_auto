@@ -42,3 +42,8 @@ class GitHub:
         r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/commits/{SHA}/branches-where-head')
 
         return r.json()
+
+    def get_content_from_directory(self, owner, name_repo, path=''):
+        r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/contents/{path}')
+
+        return r.json()

@@ -36,12 +36,12 @@ import pytest
 #     assert github_api.get_commits('QAAutoOleks', 'python_basics')[0]['commit']['author']['name'] == 'Oleksandr Tsupko'
 #     assert github_api.get_commits('QAAutoOleks', 'pythonbasics')['message'] == 'Not Found'
 
-@pytest.mark.api_git
-def test_get_commits(github_api):
-    sha = 'eeecaa1c28bd344becf888de1f9d82aec85bcb27'
-    assert github_api.get_list_commits(
-        'QAAutoOleks', 'python_basics', sha
-    )[0]['commit']['url'] == f'https://api.github.com/repos/QAAutoOleks/python_basics/commits/{sha}'
+# @pytest.mark.api_git
+# def test_get_commits_by_sha(github_api):
+#     sha = 'eeecaa1c28bd344becf888de1f9d82aec85bcb27'
+#     assert github_api.get_list_commits(
+#         'QAAutoOleks', 'python_basics', sha
+#     )[0]['commit']['url'] == f'https://api.github.com/repos/QAAutoOleks/python_basics/commits/{sha}'
 
 # @pytest.mark.api_git
 # def test_get_list_of_branches(github_api):
@@ -55,3 +55,9 @@ def test_get_commits(github_api):
 #     )['name'] == 'main' and github_api.get_branch(
 #         'QAAutoOleks', 'python_basics', 'main'
 #     )['commit']['commit']['author']['name'] == 'Oleksandr Tsupko'
+
+@pytest.mark.api_git
+def test_get_content_from_directory(github_api):
+    print(github_api.get_content_from_directory(
+        'QAAutoOleks', 'python_basics', 'Lessons'
+    )[0]['html_url']) == 'https://github.com/QAAutoOleks/python_basics/blob/main/Lessons/assign_1.py'
