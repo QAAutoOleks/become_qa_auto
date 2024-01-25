@@ -30,4 +30,4 @@ def test_repo_with_single_char_be_found(github_api):
 @pytest.mark.api_git
 def test_get_list_of_branches(github_api):
     list_repo = github_api.get_list_branches('QAAutoOleks', 'python_basics')
-    assert len(list_repo.json()) == 4
+    assert len(list_repo) == 4
