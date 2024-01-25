@@ -26,3 +26,8 @@ def test_repo_cannot_be_found(github_api):
 def test_repo_with_single_char_be_found(github_api):
     repo = github_api.search_repo('b')
     assert repo['total_count'] != 0
+
+@pytest.mark.api_git
+def test_get_list_of_branches(github_api):
+    list_repo = github_api.get_list_branches('QAAutoOleks', 'python_basics')
+    assert len(list_repo.json()) == 4

@@ -17,3 +17,8 @@ class GitHub:
         body = r.json()
 
         return body
+
+    def get_list_branches(self, owner, name_repo):
+        r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/branches')
+
+        return r
