@@ -36,7 +36,7 @@ class GitHub:
     def get_branch(self, owner, name_repo, name_branch):
         r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/branches/{name_branch}')
 
-        return r
+        return r.json()
 
     def get_list_commits(self, owner, name_repo, SHA):
         r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/commits/{SHA}/branches-where-head')
