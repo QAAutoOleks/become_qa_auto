@@ -28,6 +28,22 @@ import pytest
 #     assert repo['total_count'] != 0
 
 # @pytest.mark.api_git
+# def test_emoji(github_api):
+#     github_api.get_emogjis() == 200
+
+# @pytest.mark.api_git
+# def test_get_commit(github_api):
+#     assert github_api.get_commits('QAAutoOleks', 'python_basics')[0]['commit']['author']['name'] == 'Oleksandr Tsupko'
+#     assert github_api.get_commits('QAAutoOleks', 'pythonbasics')['message'] == 'Not Found'
+
+@pytest.mark.api_git
+def test_get_commits(github_api):
+    sha = 'eeecaa1c28bd344becf888de1f9d82aec85bcb27'
+    assert github_api.get_list_commits(
+        'QAAutoOleks', 'python_basics', sha
+    )[0]['commit']['url'] == f'https://api.github.com/repos/QAAutoOleks/python_basics/commits/{sha}'
+
+# @pytest.mark.api_git
 # def test_get_list_of_branches(github_api):
 #     list_repo = github_api.get_list_branches('QAAutoOleks', 'python_basics')
 #     assert len(list_repo) == 4
@@ -39,12 +55,3 @@ import pytest
 #     )['name'] == 'main' and github_api.get_branch(
 #         'QAAutoOleks', 'python_basics', 'main'
 #     )['commit']['commit']['author']['name'] == 'Oleksandr Tsupko'
-
-@pytest.mark.api_git
-def test_emoji(github_api):
-    github_api.get_emogjis() == 200
-
-@pytest.mark.api_git
-def test_get_commit(github_api):
-    assert github_api.get_commits('QAAutoOleks', 'python_basics')[0]['commit']['author']['name'] == 'Oleksandr Tsupko'
-    assert github_api.get_commits('QAAutoOleks', 'pythonbasics')['message'] == 'Not Found'
