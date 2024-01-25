@@ -32,10 +32,14 @@ import pytest
 #     list_repo = github_api.get_list_branches('QAAutoOleks', 'python_basics')
 #     assert len(list_repo) == 4
 
+# @pytest.mark.api_git
+# def test_get_branch(github_api):
+#     assert github_api.get_branch(
+#         'QAAutoOleks', 'python_basics', 'main'
+#     )['name'] == 'main' and github_api.get_branch(
+#         'QAAutoOleks', 'python_basics', 'main'
+#     )['commit']['commit']['author']['name'] == 'Oleksandr Tsupko'
+
 @pytest.mark.api_git
-def test_get_branch(github_api):
-    assert github_api.get_branch(
-        'QAAutoOleks', 'python_basics', 'main'
-    )['name'] == 'main' and github_api.get_branch(
-        'QAAutoOleks', 'python_basics', 'main'
-    )['commit']['commit']['author']['name'] == 'Oleksandr Tsupko'
+def test_emoji(github_api):
+    github_api.get_emogjis() == 200

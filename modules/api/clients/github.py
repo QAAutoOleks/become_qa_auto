@@ -27,3 +27,8 @@ class GitHub:
         r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/branches/{name_branch}')
 
         return r.json()
+
+    def get_emogjis(self):
+        r = requests.get('https://api.github.com/emojis')
+
+        return r.status_code
