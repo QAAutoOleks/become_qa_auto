@@ -43,3 +43,8 @@ import pytest
 @pytest.mark.api_git
 def test_emoji(github_api):
     github_api.get_emogjis() == 200
+
+@pytest.mark.api_git
+def test_get_commit(github_api):
+    assert github_api.get_commits('QAAutoOleks', 'python_basics')[0]['commit']['author']['name'] == 'Oleksandr Tsupko'
+    assert github_api.get_commits('QAAutoOleks', 'pythonbasics')['message'] == 'Not Found'
