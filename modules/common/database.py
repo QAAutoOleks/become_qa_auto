@@ -8,6 +8,10 @@ class Database():
         self.connection = sqlite3.connect(
             r"C:\\Users\\User\\Desktop\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
+
+        # To increase the quantity of test cases 
+        # the 'orders' table was changed. 
+        # Added column "quantity_of_product"
         self.cursor.execute("DROP TABLE IF EXISTS orders")
         modificate_table_orders = """CREATE TABLE orders (
             id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -21,10 +25,14 @@ class Database():
         )"""
         self.cursor.execute(modificate_table_orders)
 
+        # In order to successfully pass tests with balance of products 
+        # it is necessary to create a positive balance of products
+        # (products.quantity) before tests start
         Database.update_quantity_of_products(self, 20, 1)
         Database.update_quantity_of_products(self, 20, 2)
         Database.update_quantity_of_products(self, 20, 3)
 
+        # 
         self.cursor.execute("DROP TABLE IF EXISTS temporary_products")
         modificate_table_products = """CREATE TABLE temporary_products (
             id INTEGER PRIMARY KEY,
