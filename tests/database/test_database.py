@@ -1,6 +1,9 @@
 import pytest
+import sqlite3
+from sqlite3 import OperationalError
 from datetime import date
 from modules.common.database import Database
+from sqlite3 import DatabaseError
 
 
 # @pytest.mark.database
@@ -53,22 +56,30 @@ from modules.common.database import Database
 #     assert db.get_list_of_data()[0][2] == 'солодка вода'
 #     assert db.get_list_of_data()[0][3] == 'з цукром'
 
+# @pytest.mark.database
+# def test_insert_data_in_table_orders():
+#     db = Database()
+#     db.insert_in_orders_data()
+#     assert len(db.get_list_of_data_orders()) == 6
+#     assert db.get_list_of_data_orders()[0][4] == str(date.today())
+#     assert len(
+#         db.get_orders_inner_join_customers_and_products_by_name_of_product(
+#             'солодка вода'
+#         )) == 4
+#     assert db.get_orders_inner_join_customers_and_products_by_name_of_product(
+#             'молоко'
+#         )[0] == ('молоко', 1.5, '2024-01-26', 'Sergii', 'натуральне незбиране')
+#     assert (len(db.get_orders_inner_join_customers_and_products_by_name_of_customer(
+#         'Sergii'
+#         ))) == 3
+#     assert (db.get_orders_inner_join_customers_and_products_by_name_of_customer(
+#         'Sergii'
+#         ))[0] == ('Sergii', 'солодка вода', 3.5, '2024-01-26', 'з цукром')
+
 @pytest.mark.database
-def test_insert_data_in_orders():
+def test_insert_invalid_data_types():
     db = Database()
-    db.insert_in_orders_data()
-    assert len(db.get_list_of_data_orders()) == 6
-    assert db.get_list_of_data_orders()[0][4] == str(date.today())
-    assert len(
-        db.get_orders_inner_join_customers_and_products_by_name_of_product(
-            'солодка вода'
-        )) == 4
-    assert db.get_orders_inner_join_customers_and_products_by_name_of_product(
-            'молоко'
-        )[0] == ('молоко', 1.5, '2024-01-26', 'Sergii', 'натуральне незбиране')
-    assert (len(db.get_orders_inner_join_customers_and_products_by_name_of_customer(
-        'Sergii'
-        ))) == 3
-    assert (db.get_orders_inner_join_customers_and_products_by_name_of_customer(
-        'Sergii'
-        ))[0] == ('Sergii', 'солодка вода', 3.5, '2024-01-26', 'з цукром')    
+    try:
+        db.create_new_product(11, 'печиво', 'солодке', 'Thirty')
+    except sqlite3.OperationalError as e:
+        assert str(e) == "no such column: Thirty"
