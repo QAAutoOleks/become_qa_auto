@@ -28,7 +28,7 @@ from modules.common.database import Database
 # @pytest.mark.database
 # def test_update_quantity_of_products():
 #     db = Database()
-#     db.update_quantity_of_products('з цукром', 25)    
+#     db.update_quantity_of_products('з цукром', 25)
 
 #     assert db.get_quantity_products('з цукром')[0][0] == 25
 
@@ -59,3 +59,10 @@ def test_insert_data_in_orders():
     db.insert_in_orders_data()
     assert len(db.get_list_of_data_orders()) == 6
     assert db.get_list_of_data_orders()[0][4] == str(date.today())
+    assert len(
+        db.get_orders_inner_join_customers_and_products_by_name_of_product(
+            'солодка вода'
+        )) == 4
+    assert db.get_orders_inner_join_customers_and_products_by_name_of_product(
+            'молоко'
+        )[0] == ('молоко', 1.5, '2024-01-26', 'Sergii', 'натуральне незбиране')

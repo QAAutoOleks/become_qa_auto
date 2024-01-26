@@ -77,12 +77,29 @@ class Database():
             products.name, \
             products.description, \
             orders.date_of_order\
-                FROM orders\
-                    JOIN customers ON orders.customers_id = customers.id\
-                        JOIN products ON orders.products_id = products.id"
+            FROM orders\
+            JOIN customers ON orders.customers_id = customers.id\
+            JOIN products ON orders.products_id = products.id"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
+
+    def get_orders_inner_join_customers_and_products_by_name_of_product(self, product_name):
+        sql = f"""SELECT 
+            name_of_product, 
+            quantity_of_product, 
+            date_of_order, 
+            customers.name,
+            products.description 
+            FROM orders 
+            INNER JOIN customers 
+            ON orders.customers_id = customers.id 
+            INNER JOIN products 
+            ON products.id = orders.products_id
+            WHERE products.name = '{product_name}';"""
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
 
     def insert_in_orders_method(self, name_of_product, quantity_of_product, customers_id, products_id):
         date_today = str(date.today())
