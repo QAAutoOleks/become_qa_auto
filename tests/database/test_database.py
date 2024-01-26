@@ -5,7 +5,7 @@ from modules.common.database import Database
 # @pytest.mark.database
 # def test_database_connection():
 #     db = Database()
-#     db.test_connection()
+#     db.testing_connection()
 
 # @pytest.mark.database
 # def test_check_all_users():
@@ -53,5 +53,6 @@ from modules.common.database import Database
 #     assert db.get_list_of_data()[0][3] == 'з цукром'
 
 @pytest.mark.database
-def test_create_new_table():
+def test_insert_data_in_orders():
     db = Database()
+    db.insert_in_orders_data()

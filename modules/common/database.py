@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 
 
 class Database():
@@ -10,8 +11,9 @@ class Database():
         self.cursor.execute("DROP TABLE IF EXISTS orders")
         table = """CREATE TABLE orders (
             id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            name VARCHAR(255) NOT NULL,
-            date_and_time CHAR(25) NOT NULL,
+            name_of_product VARCHAR(255) NOT NULL,
+            quantity_of_product REAL NOT NULL,
+            date VARCHAR(255) NOT NULL,
             customers_id INTEGER,
             products_id INTEGER,
             FOREIGN KEY (customers_id) REFERENCES customers (id)
@@ -20,7 +22,7 @@ class Database():
         self.cursor.execute(table)
         print("Table 'orders' was created")
 
-    def test_connection(self):
+    def testing_connection(self):
         sqlite_select_Query = "SELECT sqlite_version();"
         self.cursor.execute(sqlite_select_Query)
         record = self.cursor.fetchall()
@@ -41,7 +43,7 @@ class Database():
     def update_quantity_of_products(self, description, quantity):
         query = f"UPDATE products SET quantity = {quantity} WHERE description = '{description}'"
         self.cursor.execute(query)
-        self.connection.commit() # підтвердження змін в базі даних
+        self.connection.commit()  # підтвердження змін в базі даних
 
     def get_quantity_products(self, products_description):
         query = f"SELECT quantity FROM products WHERE description = '{products_description}'"
@@ -78,9 +80,25 @@ class Database():
             orders.order_date\
                 FROM orders\
                     JOIN customers ON orders.customer_id = customers.id\
-                        JOIN products ON orders.product_id = products.id"             
+                        JOIN products ON orders.product_id = products.id"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
 
-    
+    def insert_in_orders_method(self, name_of_product, quantity_of_product, customers_id, products_id):
+        date_today = date.today()
+        query = f"INSERT OR REPLACE INTO orders \
+            (name_of_product, quantity_of_product, \
+                date, customers_id, products_id) \
+            VALUES ('{name_of_product}', '{quantity_of_product}', \
+                {date_today}, '{customers_id}', '{products_id}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_in_orders_data(self):
+        Database.insert_in_orders_method(self, 'солодка вода', 3.5, 1, 1)
+        Database.insert_in_orders_method(self, 'солодка вода', 2, 1, 2)
+        Database.insert_in_orders_method(self, 'молоко', 1.5, 1, 3)
+        Database.insert_in_orders_method(self, 'солодка вода', 5, 2, 1)
+        Database.insert_in_orders_method(self, 'солодка вода', 1, 2, 2)
+        Database.insert_in_orders_method(self, 'молоко', 2, 2, 3)
