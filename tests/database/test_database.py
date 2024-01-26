@@ -45,7 +45,7 @@ from modules.common.database import Database
 #     assert db.get_product_by_id(20) == []
 
 # @pytest.mark.database
-# def test_list_of_data():
+# def test_list_of_data_orders():
 #     db = Database()
 #     assert db.get_list_of_data()[0][0] == 1
 #     assert db.get_list_of_data()[0][1] == 1
@@ -56,3 +56,4 @@ from modules.common.database import Database
 def test_insert_data_in_orders():
     db = Database()
     db.insert_in_orders_data()
+    print(db.get_list_of_data_orders())
