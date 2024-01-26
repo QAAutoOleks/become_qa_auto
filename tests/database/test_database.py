@@ -1,4 +1,5 @@
 import pytest
+from datetime import date
 from modules.common.database import Database
 
 
@@ -56,4 +57,5 @@ from modules.common.database import Database
 def test_insert_data_in_orders():
     db = Database()
     db.insert_in_orders_data()
-    print(db.get_list_of_data_orders())
+    assert len(db.get_list_of_data_orders()) == 6
+    assert db.get_list_of_data_orders()[0][4] == str(date.today())

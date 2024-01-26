@@ -93,7 +93,6 @@ class Database():
                 '{date_today}', '{customers_id}', '{products_id}')"
         self.cursor.execute(query)
         self.connection.commit()
-        print(date_today)
 
     def insert_in_orders_data(self):
         Database.insert_in_orders_method(self, 'солодка вода', 3.5, 1, 1)
