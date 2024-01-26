@@ -8,18 +8,22 @@ class Database():
         self.connection = sqlite3.connect(
             r"C:\\Users\\User\\Desktop\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
-        self.cursor.execute("DROP TABLE IF EXISTS orders")
-        table = """CREATE TABLE orders (
-            id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            name_of_product VARCHAR(255) NOT NULL,
-            quantity_of_product REAL NOT NULL,
-            date_of_order VARCHAR(255) NOT NULL,
-            customers_id INTEGER,
-            products_id INTEGER,
-            FOREIGN KEY (customers_id) REFERENCES customers (id)
-            FOREIGN KEY (products_id) REFERENCES products (id)
-        )"""
-        self.cursor.execute(table)
+        # self.cursor.execute("DROP TABLE IF EXISTS orders")
+        # table = """CREATE TABLE orders (
+        #     id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        #     name_of_product VARCHAR(255) NOT NULL,
+        #     quantity_of_product REAL NOT NULL,
+        #     date_of_order VARCHAR(255) NOT NULL,
+        #     customers_id INTEGER,
+        #     products_id INTEGER,
+        #     FOREIGN KEY (customers_id) REFERENCES customers (id)
+        #     FOREIGN KEY (products_id) REFERENCES products (id)
+        # )"""
+        Database.to_orders_add_column(self, 'name_of_product')
+
+    def to_orders_add_column(self, name_colomn):
+        addColumn = f"ALTER TABLE orders ADD COLUMN {name_colomn} VARCHAR(255) NOT NULL"
+        self.cursor.execute(addColumn)
 
     def testing_connection(self):
         sqlite_select_Query = "SELECT sqlite_version();"
@@ -62,8 +66,6 @@ class Database():
             VALUES ({id}, '{name}', '{description}', {quantity})"
         self.cursor.execute(query)
         self.connection.commit()
-        new_product = Database.get_product_by_id(self, id)
-        return new_product
 
     def delete_product(self, id):
         query = f"DELETE FROM products WHERE id = {id}"

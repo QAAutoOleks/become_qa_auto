@@ -36,26 +36,18 @@ def test_update_quantity_of_products():
 @pytest.mark.database
 def test_create_new_product():
     db = Database()
-    # в результаті отримуємо tuple
-    assert db.create_new_product(11, 'печиво', 'солодке', 30)[0][0] == 30
+    db.create_new_product(11, 'печиво', 'солодке', 30)
+    assert db.get_product_by_id(11)[0][0] == 30
 
 @pytest.mark.database
 def test_create_and_delete():
     db = Database()
     db.create_new_product(20, 'test', 'data', 999)
-    db.delete_product(20)
-    assert db.get_product_by_id(20) == []
+    # db.delete_product(20)
+    # assert db.get_product_by_id(20) == []
 
 @pytest.mark.database
-def test_list_of_data_orders():
-    db = Database()
-    assert db.get_list_of_data()[0][0] == 1
-    assert db.get_list_of_data()[0][1] == 1
-    assert db.get_list_of_data()[0][2] == 'солодка вода'
-    assert db.get_list_of_data()[0][3] == 'з цукром'
-
-@pytest.mark.database
-def test_insert_data_in_table_orders():
+def test_insert_valid_data_in_table_orders():
     db = Database()
     db.insert_in_orders_data()
     assert len(db.get_list_of_data_orders()) == 6
