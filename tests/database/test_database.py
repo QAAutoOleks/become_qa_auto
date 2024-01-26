@@ -40,11 +40,11 @@ def test_create_new_product():
     assert db.get_product_by_id(11)[0][0] == 30
 
 @pytest.mark.database
-def test_create_and_delete():
+def test_create_and_delete_product():
     db = Database()
     db.create_new_product(20, 'test', 'data', 999)
     db.delete_product(20)
-    # assert db.get_product_by_id(20) == []
+    assert db.get_product_by_id(20) == []
 
 @pytest.mark.database
 def test_insert_valid_data_in_table_orders():
@@ -67,9 +67,23 @@ def test_insert_valid_data_in_table_orders():
         ))[0] == ('Sergii', 'солодка вода', 3.5, '2024-01-26', 'з цукром')
 
 @pytest.mark.database
+def test_delete_order():
+    db = Database()
+    db.delete_order(4)
+    assert db.get_order_by_id(4) == []
+
+@pytest.mark.database
 def test_insert_invalid_data_types():
     db = Database()
     try:
         db.create_new_product(11, 'печиво', 'солодке', 'Thirty')
     except sqlite3.OperationalError as e:
         assert str(e) == "no such column: Thirty"
+
+@pytest.mark.database
+def test_update_customer():
+    db = Database()
+    db.update_customers_data('city', 'Dnipro', 2)
+    assert db.get_info_about_customer('city', 2) == [('Dnipro',)]
+    db.update_customers_data('postalCode', '49000', 2)
+    assert db.get_info_about_customer('postalCode', 2) == [('49000',)]

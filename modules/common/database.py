@@ -133,3 +133,27 @@ class Database():
         Database.insert_in_orders_method(self, 'солодка вода', 5, 2, 1)
         Database.insert_in_orders_method(self, 'солодка вода', 1, 2, 2)
         Database.insert_in_orders_method(self, 'молоко', 2, 2, 3)
+
+    def get_order_by_id(self, order_id):
+        query = f"SELECT name_of_product FROM orders WHERE id_orders = {order_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+
+        return record
+
+    def delete_order(self, order_id):
+        query = f"DELETE FROM orders WHERE id = {order_id}"
+
+    def update_customers_data(self, modification_attribute, new_city, customer_id):
+        query = f"UPDATE customers SET '{modification_attribute}' = '{new_city}' \
+            WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def get_info_about_customer(self, required_attribute, customer_id):
+        query = f"SELECT {required_attribute} FROM customers \
+            WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+
+        return record
