@@ -27,13 +27,13 @@ class Database():
         record = self.cursor.fetchall()
         print(f"Connected successfully. SQLite Database Version is: {record}")
 
-    def get_all_users(self):
+    def get_all_customers(self):
         query = "SELECT name, address, city FROM customers"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
 
-    def get_user_adress_by_name(self, name):
+    def get_customer_adress_by_name(self, name):
         query = f"SELECT address, city, postalCode, country FROM customers WHERE name = '{name}'"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
@@ -56,7 +56,7 @@ class Database():
         record = self.cursor.fetchall()
         return record
 
-    def create_new_product(self, id, name, description, quantity):
+    def insert_product(self, id, name, description, quantity):
         query = f"INSERT OR REPLACE INTO products \
             (id, name, description, quantity) \
             VALUES ({id}, '{name}', '{description}', {quantity})"
@@ -65,6 +65,18 @@ class Database():
 
     def delete_product(self, id):
         query = f"DELETE FROM products WHERE id = {id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_customer(self, id, name, address, city, postalCode, country):
+        query = f"INSERT OR REPLACE INTO customers (\
+            id, name, address, city, postalCode, country) \
+            VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def delete_customer(self, customer_id):
+        query = f"DELETE FROM customers WHERE id = {customer_id}"
         self.cursor.execute(query)
         self.connection.commit()
 

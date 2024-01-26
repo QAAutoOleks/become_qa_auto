@@ -10,16 +10,16 @@ def test_database_connection():
     db.testing_connection()
 
 @pytest.mark.database
-def test_check_all_users():
+def test_check_all_customers():
     db = Database()
-    users = db.get_all_users()
+    users = db.get_all_customers()
 
     print(users)
 
 @pytest.mark.database
-def test_check_user_sergii():
+def test_check_customer_sergii():
     db = Database()
-    user = db.get_user_adress_by_name('Sergii')
+    user = db.get_customer_adress_by_name('Sergii')
 
     assert user[0][0] == 'Maydan Nezalezhnosti 1'
     assert user[0][1] == 'Kyiv'
@@ -34,15 +34,24 @@ def test_update_quantity_of_products():
     assert db.get_quantity_products('з цукром')[0][0] == 25
 
 @pytest.mark.database
-def test_create_new_product():
+def test_insert_product():
     db = Database()
-    db.create_new_product(11, 'печиво', 'солодке', 30)
+    db.insert_product(11, 'печиво', 'солодке', 30)
     assert db.get_product_by_id(11)[0][0] == 30
 
 @pytest.mark.database
-def test_create_and_delete_product():
+def test_insert_and_delete_customer():
     db = Database()
-    db.create_new_product(20, 'test', 'data', 999)
+    initially_length_of_customers_list = len(db.get_all_customers())
+    db.insert_customer(50, 'Pavlo', 'Poshtova str, 32', 'Kharkiv', '61000', 'Ukraine')
+    final_length_of_customers_list = len(db.get_all_customers())
+    assert final_length_of_customers_list == initially_length_of_customers_list + 1
+    db.delete_customer(50)
+
+@pytest.mark.database
+def test_insert_and_delete_product():
+    db = Database()
+    db.insert_product(20, 'test', 'data', 999)
     db.delete_product(20)
     assert db.get_product_by_id(20) == []
 
@@ -76,7 +85,7 @@ def test_delete_order():
 def test_insert_invalid_data_types():
     db = Database()
     try:
-        db.create_new_product(11, 'печиво', 'солодке', 'Thirty')
+        db.insert_product(11, 'печиво', 'солодке', 'Thirty')
     except sqlite3.OperationalError as e:
         assert str(e) == "no such column: Thirty"
 
