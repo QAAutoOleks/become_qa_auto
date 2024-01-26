@@ -69,7 +69,7 @@ class Database():
         self.connection.commit()
 
     def insert_customer(self, id, name, address, city, postalCode, country):
-        query = f"INSERT OR REPLACE INTO customers (\
+        query = f"INSERT INTO customers (\
             id, name, address, city, postalCode, country) \
             VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
         self.cursor.execute(query)

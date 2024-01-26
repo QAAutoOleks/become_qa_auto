@@ -49,6 +49,16 @@ def test_insert_and_delete_customer():
     db.delete_customer(50)
 
 @pytest.mark.database
+def test_insert_customer_with_id_not_unique():
+    db = Database()
+    db.insert_customer(50, 'Pavlo', 'Poshtova str, 32', 'Kharkiv', '61000', 'Ukraine')
+    try:
+        db.insert_customer(50, 'Pavlo', 'Poshtova str, 32', 'Kharkiv', '61000', 'Ukraine')
+    except sqlite3.IntegrityError as e:
+        assert str(e) == 'UNIQUE constraint failed: customers.id'
+    db.delete_customer(50)
+
+@pytest.mark.database
 def test_insert_and_delete_product():
     db = Database()
     db.insert_product(20, 'test', 'data', 999)
