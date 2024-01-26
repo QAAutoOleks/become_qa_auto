@@ -39,6 +39,32 @@ class Database():
         record = self.cursor.fetchall()
         return record
 
+    def insert_customer(self, id, name, address, city, postalCode, country):
+        query = f"INSERT INTO customers (\
+            id, name, address, city, postalCode, country) \
+            VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def update_customers_data(self, modification_attribute, new_city, customer_id):
+        query = f"UPDATE customers SET '{modification_attribute}' = '{new_city}' \
+            WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def delete_customer(self, customer_id):
+        query = f"DELETE FROM customers WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def get_info_about_customer(self, required_attribute, customer_id):
+        query = f"SELECT {required_attribute} FROM customers \
+            WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+
+        return record
+
     def update_quantity_of_products(self, description, quantity):
         query = f"UPDATE products SET quantity = {quantity} WHERE description = '{description}'"
         self.cursor.execute(query)
@@ -68,17 +94,30 @@ class Database():
         self.cursor.execute(query)
         self.connection.commit()
 
-    def insert_customer(self, id, name, address, city, postalCode, country):
-        query = f"INSERT INTO customers (\
-            id, name, address, city, postalCode, country) \
-            VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+    def insert_in_orders_method(self, name_of_product, quantity_of_product, customers_id, products_id):
+        date_today = str(date.today())
+        query = f"INSERT OR REPLACE INTO orders \
+            (name_of_product, quantity_of_product, \
+                date_of_order, customers_id, products_id) \
+            VALUES ('{name_of_product}', '{quantity_of_product}', \
+                '{date_today}', '{customers_id}', '{products_id}')"
         self.cursor.execute(query)
         self.connection.commit()
 
-    def delete_customer(self, customer_id):
-        query = f"DELETE FROM customers WHERE id = {customer_id}"
+    def insert_in_orders_data(self):
+        Database.insert_in_orders_method(self, 'солодка вода', 3.5, 1, 1)
+        Database.insert_in_orders_method(self, 'солодка вода', 2, 1, 2)
+        Database.insert_in_orders_method(self, 'молоко', 1.5, 1, 3)
+        Database.insert_in_orders_method(self, 'солодка вода', 5, 2, 1)
+        Database.insert_in_orders_method(self, 'солодка вода', 1, 2, 2)
+        Database.insert_in_orders_method(self, 'молоко', 2, 2, 3)
+
+    def get_order_by_id(self, order_id):
+        query = f"SELECT name_of_product FROM orders WHERE id_orders = {order_id}"
         self.cursor.execute(query)
-        self.connection.commit()
+        record = self.cursor.fetchall()
+
+        return record
 
     def get_list_of_data_orders(self):
         query = f"SELECT \
@@ -128,44 +167,5 @@ class Database():
         result = self.cursor.fetchall()
         return result
 
-    def insert_in_orders_method(self, name_of_product, quantity_of_product, customers_id, products_id):
-        date_today = str(date.today())
-        query = f"INSERT OR REPLACE INTO orders \
-            (name_of_product, quantity_of_product, \
-                date_of_order, customers_id, products_id) \
-            VALUES ('{name_of_product}', '{quantity_of_product}', \
-                '{date_today}', '{customers_id}', '{products_id}')"
-        self.cursor.execute(query)
-        self.connection.commit()
-
-    def insert_in_orders_data(self):
-        Database.insert_in_orders_method(self, 'солодка вода', 3.5, 1, 1)
-        Database.insert_in_orders_method(self, 'солодка вода', 2, 1, 2)
-        Database.insert_in_orders_method(self, 'молоко', 1.5, 1, 3)
-        Database.insert_in_orders_method(self, 'солодка вода', 5, 2, 1)
-        Database.insert_in_orders_method(self, 'солодка вода', 1, 2, 2)
-        Database.insert_in_orders_method(self, 'молоко', 2, 2, 3)
-
-    def get_order_by_id(self, order_id):
-        query = f"SELECT name_of_product FROM orders WHERE id_orders = {order_id}"
-        self.cursor.execute(query)
-        record = self.cursor.fetchall()
-
-        return record
-
     def delete_order(self, order_id):
         query = f"DELETE FROM orders WHERE id = {order_id}"
-
-    def update_customers_data(self, modification_attribute, new_city, customer_id):
-        query = f"UPDATE customers SET '{modification_attribute}' = '{new_city}' \
-            WHERE id = {customer_id}"
-        self.cursor.execute(query)
-        self.connection.commit()
-
-    def get_info_about_customer(self, required_attribute, customer_id):
-        query = f"SELECT {required_attribute} FROM customers \
-            WHERE id = {customer_id}"
-        self.cursor.execute(query)
-        record = self.cursor.fetchall()
-
-        return record
