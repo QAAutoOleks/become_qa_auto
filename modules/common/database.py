@@ -9,7 +9,7 @@ class Database():
             r"C:\\Users\\User\\Desktop\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
         self.cursor.execute("DROP TABLE IF EXISTS orders")
-        table = """CREATE TABLE orders (
+        modificate_table_orders = """CREATE TABLE orders (
             id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name_of_product VARCHAR(255) NOT NULL,
             quantity_of_product REAL NOT NULL,
@@ -19,7 +19,31 @@ class Database():
             FOREIGN KEY (customers_id) REFERENCES customers (id)
             FOREIGN KEY (products_id) REFERENCES products (id)
         )"""
-        self.cursor.execute(table)
+        self.cursor.execute(modificate_table_orders)
+
+        Database.update_quantity_of_products(self, 20, 1)
+        Database.update_quantity_of_products(self, 20, 2)
+        Database.update_quantity_of_products(self, 20, 3)
+
+        self.cursor.execute("DROP TABLE IF EXISTS temporary_products")
+        modificate_table_products = """CREATE TABLE temporary_products (
+            id INTEGER PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            quantity REAL NOT NULL CHECK (quantity >= 0)
+        )"""
+        self.cursor.execute(modificate_table_products)
+
+        new_table_products = """INSERT INTO temporary_products
+        SELECT * FROM products"""
+        self.cursor.execute(new_table_products)
+        self.connection.commit()
+
+        self.cursor.execute("DROP TABLE IF EXISTS products")
+        old_table_products = """ALTER TABLE temporary_products 
+            RENAME TO products"""
+        self.cursor.execute(old_table_products)
+        self.connection.commit()
 
     def testing_connection(self):
         sqlite_select_Query = "SELECT sqlite_version();"
@@ -65,21 +89,23 @@ class Database():
 
         return record
 
-    def update_quantity_of_products(self, description, quantity):
-        query = f"UPDATE products SET quantity = {quantity} WHERE description = '{description}'"
+    def update_quantity_of_products(self, quantity, id):
+        query = f"UPDATE products SET quantity = {quantity} WHERE id = '{id}'"
         self.cursor.execute(query)
-        self.connection.commit()  # підтвердження змін в базі даних
+        self.connection.commit()
 
-    def get_quantity_products(self, products_description):
-        query = f"SELECT quantity FROM products WHERE description = '{products_description}'"
+    def get_quantity_products(self, id):
+        query = f"SELECT quantity FROM products WHERE id = '{id}'"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
+
         return record
 
     def get_product_by_id(self, id):
         query = f"SELECT quantity FROM products WHERE id = {id}"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
+
         return record
 
     def insert_product(self, id, name, description, quantity):
@@ -103,6 +129,14 @@ class Database():
                 '{date_today}', '{customers_id}', '{products_id}')"
         self.cursor.execute(query)
         self.connection.commit()
+
+        quantity_of_product_after_new_order_created = Database.get_quantity_products(
+            self, products_id)[0][0]
+        quantity_of_product_after_new_order_created -= quantity_of_product
+        quantity_of_product_after_new_order_created = str(
+            quantity_of_product_after_new_order_created)
+        Database.update_quantity_of_products(
+            self, quantity_of_product_after_new_order_created, products_id)
 
     def insert_in_orders_data(self):
         Database.insert_in_orders_method(self, 'солодка вода', 3.5, 1, 1)
@@ -131,6 +165,7 @@ class Database():
             JOIN products ON orders.products_id = products.id"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
+
         return record
 
     def get_orders_inner_join_customers_and_products_by_name_of_product(self, product_name):
@@ -148,6 +183,7 @@ class Database():
             WHERE products.name = '{product_name}';"""
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
+
         return result
 
     def get_orders_inner_join_customers_and_products_by_name_of_customer(self, customer_name):
@@ -165,6 +201,7 @@ class Database():
             WHERE customers.name = '{customer_name}';"""
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
+
         return result
 
     def delete_order(self, order_id):

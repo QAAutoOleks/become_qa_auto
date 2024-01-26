@@ -27,19 +27,6 @@ def test_check_customer_sergii():
     assert user[0][3] == 'Ukraine'
 
 @pytest.mark.database
-def test_update_quantity_of_products():
-    db = Database()
-    db.update_quantity_of_products('з цукром', 25)
-
-    assert db.get_quantity_products('з цукром')[0][0] == 25
-
-@pytest.mark.database
-def test_insert_product():
-    db = Database()
-    db.insert_product(11, 'печиво', 'солодке', 30)
-    assert db.get_product_by_id(11)[0][0] == 30
-
-@pytest.mark.database
 def test_insert_and_delete_customer():
     db = Database()
     initially_length_of_customers_list = len(db.get_all_customers())
@@ -57,6 +44,27 @@ def test_insert_customer_with_id_not_unique():
     except sqlite3.IntegrityError as e:
         assert str(e) == 'UNIQUE constraint failed: customers.id'
     db.delete_customer(50)
+
+@pytest.mark.database
+def test_update_customer():
+    db = Database()
+    db.update_customers_data('city', 'Dnipro', 2)
+    assert db.get_info_about_customer('city', 2) == [('Dnipro',)]
+    db.update_customers_data('postalCode', '49000', 2)
+    assert db.get_info_about_customer('postalCode', 2) == [('49000',)]
+
+@pytest.mark.database
+def test_update_quantity_of_products():
+    db = Database()
+    db.update_quantity_of_products(25, 1)
+
+    assert db.get_quantity_products(1)[0][0] == 25
+
+@pytest.mark.database
+def test_insert_product():
+    db = Database()
+    db.insert_product(11, 'печиво', 'солодке', 30)
+    assert db.get_product_by_id(11)[0][0] == 30
 
 @pytest.mark.database
 def test_insert_and_delete_product():
@@ -92,7 +100,7 @@ def test_delete_order():
     assert db.get_order_by_id(4) == []
 
 @pytest.mark.database
-def test_insert_invalid_data_types():
+def test_insert_invalid_data_types_in_order():
     db = Database()
     try:
         db.insert_product(11, 'печиво', 'солодке', 'Thirty')
@@ -100,9 +108,9 @@ def test_insert_invalid_data_types():
         assert str(e) == "no such column: Thirty"
 
 @pytest.mark.database
-def test_update_customer():
+def test_insert_order_when_quantity_of_products_not_enough():
     db = Database()
-    db.update_customers_data('city', 'Dnipro', 2)
-    assert db.get_info_about_customer('city', 2) == [('Dnipro',)]
-    db.update_customers_data('postalCode', '49000', 2)
-    assert db.get_info_about_customer('postalCode', 2) == [('49000',)]
+    try:
+        db.insert_in_orders_method('солодка вода', 30, 1, 1)
+    except sqlite3.IntegrityError as e:
+        assert str(e) == 'CHECK constraint failed: quantity >= 0'
