@@ -43,7 +43,7 @@ def test_create_new_product():
 def test_create_and_delete():
     db = Database()
     db.create_new_product(20, 'test', 'data', 999)
-    # db.delete_product(20)
+    db.delete_product(20)
     # assert db.get_product_by_id(20) == []
 
 @pytest.mark.database
