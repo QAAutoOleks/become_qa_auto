@@ -21,7 +21,7 @@ class GitHub:
     def get_emogjis(self):
         r = requests.get('https://api.github.com/emojis')
 
-        return r.status_code
+        return r
 
     def get_commits(self, owner, name_repo):
         r = requests.get(f'https://api.github.com/repos/{owner}/{name_repo}/commits')

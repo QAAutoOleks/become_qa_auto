@@ -5,8 +5,20 @@ class Database():
 
     def __init__(self):
         self.connection = sqlite3.connect(
-            r"C:\\Users\\User\\Desktop\\Framework\\become_qa_auto" + r"\\become_qa_auto.db")
+            r"C:\\Users\\User\\Desktop\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
+        self.cursor.execute("DROP TABLE IF EXISTS orders")
+        table = """CREATE TABLE orders (
+            id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            name VARCHAR(255) NOT NULL,
+            date_and_time CHAR(25) NOT NULL,
+            customers_id INTEGER,
+            products_id INTEGER,
+            FOREIGN KEY (customers_id) REFERENCES customers (id)
+            FOREIGN KEY (products_id) REFERENCES products (id)
+        )"""
+        self.cursor.execute(table)
+        print("Table 'orders' was created")
 
     def test_connection(self):
         sqlite_select_Query = "SELECT sqlite_version();"
@@ -66,8 +78,9 @@ class Database():
             orders.order_date\
                 FROM orders\
                     JOIN customers ON orders.customer_id = customers.id\
-                        JOIN products ON orders.product_id = products.id"
-                            #WHERE description = '{data}'"               
+                        JOIN products ON orders.product_id = products.id"             
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
+
+    
