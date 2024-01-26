@@ -66,3 +66,9 @@ def test_insert_data_in_orders():
     assert db.get_orders_inner_join_customers_and_products_by_name_of_product(
             'молоко'
         )[0] == ('молоко', 1.5, '2024-01-26', 'Sergii', 'натуральне незбиране')
+    assert (len(db.get_orders_inner_join_customers_and_products_by_name_of_customer(
+        'Sergii'
+        ))) == 3
+    assert (db.get_orders_inner_join_customers_and_products_by_name_of_customer(
+        'Sergii'
+        ))[0] == ('Sergii', 'солодка вода', 3.5, '2024-01-26', 'з цукром')    

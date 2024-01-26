@@ -101,6 +101,23 @@ class Database():
         result = self.cursor.fetchall()
         return result
 
+    def get_orders_inner_join_customers_and_products_by_name_of_customer(self, customer_name):
+        sql = f"""SELECT 
+            customers.name,
+            products.name,
+            orders.quantity_of_product, 
+            orders.date_of_order,
+            products.description 
+            FROM customers 
+            INNER JOIN orders 
+            ON customers.id = orders.customers_id 
+            INNER JOIN products 
+            ON products.id = orders.products_id
+            WHERE customers.name = '{customer_name}';"""
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+
     def insert_in_orders_method(self, name_of_product, quantity_of_product, customers_id, products_id):
         date_today = str(date.today())
         query = f"INSERT OR REPLACE INTO orders \
