@@ -14,6 +14,7 @@ import pytest
 @pytest.mark.ui
 def test_search_field():
     rozetka = RozetkaMainPage()
-    rozetka.go_to()
-    rozetka.sales_elements()
-
+    rozetka.search_field()
+    assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
+    assert rozetka.header == 'Ноутбуки'
+    assert rozetka.first_good.find("Ноутбук") != -1
