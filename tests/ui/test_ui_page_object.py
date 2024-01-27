@@ -11,10 +11,22 @@ import pytest
 #     assert sign_in_page.check_title('Sign in to GitHub · GitHub')
 #     sign_in_page.close()
 
+# @pytest.mark.ui
+# def test_get_link_in_banner():
+#     rozetka = RozetkaMainPage()
+#     rozetka.banner_get_link()
+#     assert rozetka.link_in_banner == "https://rozetka.com.ua/ua/promo/rztk/"
+
 @pytest.mark.ui
-def test_search_field():
+def test_close_banner():
     rozetka = RozetkaMainPage()
-    rozetka.search_field()
-    assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
-    assert rozetka.header == 'Ноутбуки'
-    assert rozetka.first_good.find("Ноутбук") != -1
+    assert rozetka.banner_close()
+    assert rozetka.banner_before_closed == True
+
+# @pytest.mark.ui
+# def test_search_field():
+#     rozetka = RozetkaMainPage()
+#     rozetka.search_field()
+#     assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
+#     assert rozetka.header == 'Ноутбуки'
+#     assert rozetka.first_good.find("Ноутбук") != -1

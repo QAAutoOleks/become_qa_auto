@@ -10,10 +10,28 @@ class RozetkaMainPage(BasePage):
     def __init__(self):
         super().__init__()
         RozetkaMainPage.go_to(self)
+        self.wait = WebDriverWait(self.driver, timeout=10, poll_frequency=.2)
 
     def go_to(self, link='https://rozetka.com.ua/ua/'):
         self.driver.get(link)
 
+    def banner_get_link(self):        
+        element = self.wait.until(EC.presence_of_element_located((By.ID, 'rz-banner')))
+        self.link_in_banner = element.get_attribute('href')
+        
+        
+    def banner_close(self):
+        self.driver.implicitly_wait(5)
+        banner = self.driver.find_element(By.ID, 'rz-banner')
+        self.banner_before_closed = banner.is_displayed()
+        time.sleep(2)
+        self.driver.find_element(By.CSS_SELECTOR, '.exponea-popup-banner .exponea-close').click()
+        time.sleep(2)
+        try:
+            self.driver.find_element(By.ID, 'rz-banner')
+        except Exception as e:
+            if str(e).find('no such element'):
+                return True
 
     def search_field(self):
         time.sleep(1)
