@@ -75,23 +75,24 @@ def test_insert_and_delete_product():
 
 @pytest.mark.database
 def test_insert_valid_data_in_table_orders():
+    date_today = str(date.today())
     db = Database()
     db.insert_in_orders_data()
     assert len(db.get_list_of_data_orders()) == 6
-    assert db.get_list_of_data_orders()[0][4] == str(date.today())
+    assert db.get_list_of_data_orders()[0][4] == date_today
     assert len(
         db.get_orders_inner_join_customers_and_products_by_name_of_product(
             'солодка вода'
         )) == 4
     assert db.get_orders_inner_join_customers_and_products_by_name_of_product(
             'молоко'
-        )[0] == ('молоко', 1.5, '2024-01-26', 'Sergii', 'натуральне незбиране')
+        )[0] == ('молоко', 1.5, date_today, 'Sergii', 'натуральне незбиране')
     assert (len(db.get_orders_inner_join_customers_and_products_by_name_of_customer(
         'Sergii'
         ))) == 3
     assert (db.get_orders_inner_join_customers_and_products_by_name_of_customer(
         'Sergii'
-        ))[0] == ('Sergii', 'солодка вода', 3.5, '2024-01-26', 'з цукром')
+        ))[0] == ('Sergii', 'солодка вода', 3.5, date_today, 'з цукром')
 
 @pytest.mark.database
 def test_delete_order():
