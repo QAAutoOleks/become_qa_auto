@@ -21,7 +21,7 @@ class RozetkaMainPage(BasePage):
         
         
     def banner_close(self):
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(2)
         banner = self.driver.find_element(By.ID, 'rz-banner')
         self.banner_before_closed = banner.is_displayed()
         time.sleep(1)
@@ -43,7 +43,7 @@ class RozetkaMainPage(BasePage):
         button.click()
         time.sleep(2)
         self.header = self.driver.find_element(
-            By.XPATH, "//h1[contains(text(),'Ноутбуки')]").text
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/div[1]/div/h1").text
         first_good = self.driver.find_element(
             By.XPATH, "/html[1]/body[1]/app-root[1]/div[1]/div[1]\
                 /rz-category[1]/div[1]/main[1]/rz-catalog[1]/div[1]\
@@ -81,3 +81,11 @@ class RozetkaMainPage(BasePage):
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-user-identification/rz-auth/div/\
                     div/div/rz-social-auth/button[1]")
+        self.remind_password = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-user-identification/rz-auth/div/\
+                    form/fieldset/div[3]/a")
+        self.popup_remind_password = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]")
+        
