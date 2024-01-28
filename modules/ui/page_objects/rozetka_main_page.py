@@ -57,9 +57,27 @@ class RozetkaMainPage(BasePage):
         self.title_main_page = self.driver.title
         time.sleep(1)
         links_list = []
-        menu_list = self.driver.find_elements(By.XPATH, "//a[@class='menu-categories__link']")
+        menu_list = self.driver.find_elements(
+            By.XPATH, "//a[@class='menu-categories__link']")
         for element in menu_list:
             link = element.get_attribute('href')
             links_list.append(link)
         
         return links_list
+
+    def authorization_menu(self):
+        authorization_button = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-header/\
+                rz-main-header/header/div/div/ul/li[3]/rz-user/button")
+        authorization_button.click()
+        time.sleep(2)
+        self.popup_authorization = self.driver.find_element(
+            By.XPATH, "//div[@class='modal__content']")
+        self.popup_authorization_facebook = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-user-identification/rz-auth/div/\
+                    div/div/rz-social-auth/button[1]")
+        self.popup_authorization_google = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-user-identification/rz-auth/div/\
+                    div/div/rz-social-auth/button[1]")

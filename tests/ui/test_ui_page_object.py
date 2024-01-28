@@ -31,9 +31,17 @@ import pytest
 #     assert rozetka.header == 'Ноутбуки'
 #     assert rozetka.first_good.find("Ноутбук") != -1
 
+# @pytest.mark.ui
+# def test_menu_categories():
+#     rozetka = RozetkaMainPage()
+#     for link in rozetka.menu_categories():
+#         rozetka.go_to(link)
+#         assert rozetka.driver.title != rozetka.title_main_page
+
 @pytest.mark.ui
-def test_menu_categories():
+def test_authorization_menu():
     rozetka = RozetkaMainPage()
-    for link in rozetka.menu_categories():
-        rozetka.go_to(link)
-        assert rozetka.driver.title != rozetka.title_main_page
+    rozetka.authorization_menu()
+    assert rozetka.popup_authorization.is_displayed()
+    assert rozetka.popup_authorization_facebook.is_displayed()
+    assert rozetka.popup_authorization_google.is_displayed()
