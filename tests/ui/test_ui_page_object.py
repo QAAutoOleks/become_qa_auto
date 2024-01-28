@@ -60,20 +60,15 @@ def test_authorization_menu():
 
     rozetka.driver.quit()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
-    rozetka.check_sales_laptops_prices_displayed()
+    rozetka.comparison_prices(3)
 
-    counter_of_goods_tests = 0
-    for element in rozetka.goods_list:
-        if element.text.find('АКЦІЯ') != -1:
-            index_search = element.text.find('₴')
-            old_price = element.text[index_search-7:index_search]
-            new_price = element.text[index_search+2:index_search+8]
-            
-            assert int(old_price.replace(" ", "")) > int(new_price.replace(" ", ""))
-            
-            counter_of_goods_tests += 1
-            if counter_of_goods_tests == 5:
-                break
+    index = 0
+    for price in rozetka.new_prices_list:
+        assert int(price) < int(rozetka.old_prices_list[index])
+        assert price == rozetka.prices_on_goods_pages_list[index]
+        index += 1
+
+    rozetka.driver.quit()
