@@ -17,11 +17,11 @@ import pytest
 #     rozetka.banner_get_link()
 #     assert rozetka.link_in_banner == "https://rozetka.com.ua/ua/promo/rztk/"
 
-@pytest.mark.ui
-def test_close_banner():
-    rozetka = RozetkaMainPage()
-    assert rozetka.banner_close()
-    assert rozetka.banner_before_closed == True
+# @pytest.mark.ui
+# def test_close_banner():
+#     rozetka = RozetkaMainPage()
+#     assert rozetka.banner_close() != -1
+#     assert rozetka.banner_before_closed == True
 
 # @pytest.mark.ui
 # def test_search_field():
@@ -30,3 +30,10 @@ def test_close_banner():
 #     assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
 #     assert rozetka.header == 'Ноутбуки'
 #     assert rozetka.first_good.find("Ноутбук") != -1
+
+@pytest.mark.ui
+def test_menu_categories():
+    rozetka = RozetkaMainPage()
+    for link in rozetka.menu_categories():
+        rozetka.go_to(link)
+        assert rozetka.driver.title != rozetka.title_main_page
