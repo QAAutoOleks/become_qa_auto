@@ -60,10 +60,11 @@ def test_authorization_menu():
 
     rozetka.driver.quit()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.rozetka
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
     rozetka.comparison_prices(3)
+    rozetka.finding_prices_on_page(3)
 
     index = 0
     for price in rozetka.new_prices_list:
@@ -72,3 +73,27 @@ def test_check_prices_sales_laptop():
         index += 1
 
     rozetka.driver.quit()
+
+@pytest.mark.ui_not_ready
+def test_select_sorting():
+    quantity_of_tests = 3
+    rozetka = RozetkaLaptopsPage()
+    rozetka.finding_prices_on_page(quantity_of_tests)
+    price_before_sorting = rozetka.new_prices_list
+
+    rozetka.select_sorting()
+
+    rozetka.finding_prices_on_page(quantity_of_tests)
+    price_after_sorting = rozetka.new_prices_list
+
+    assert price_before_sorting != price_after_sorting
+    is_sort_low_to_high = True
+    index = 0
+    if len(price_after_sorting) > 1:
+        for i in range(1, quantity_of_tests):
+            assert price_after_sorting[i] < price_after_sorting[i-1]
+    
+    rozetka.driver.close()
+
+# @pytest.mark.ui
+# def 
