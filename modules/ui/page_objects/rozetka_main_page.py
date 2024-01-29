@@ -15,23 +15,6 @@ class RozetkaMainPage(BasePage):
     def go_to(self, link='https://rozetka.com.ua/ua/'):
         self.driver.get(link)        
 
-    def banner_get_link(self):        
-        element = self.wait.until(EC.presence_of_element_located((By.ID, 'rz-banner')))
-        self.link_in_banner = element.get_attribute('href')
-        
-        
-    def banner_close(self):
-        self.driver.implicitly_wait(2)
-        banner = self.driver.find_element(By.ID, 'rz-banner')
-        self.banner_before_closed = banner.is_displayed()
-        time.sleep(1)
-        self.driver.find_element(By.CSS_SELECTOR, '.exponea-popup-banner .exponea-close').click()
-        time.sleep(1)
-        try:
-            self.driver.find_element(By.ID, 'rz-banner')
-        except Exception as e:
-            return str(e).find('no such element')
-
     def search_field(self):
         time.sleep(1)
         search_feald = self.driver.find_element(

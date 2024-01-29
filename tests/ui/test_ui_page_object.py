@@ -13,22 +13,6 @@ def test_check_incorrect_username_page_object():
     sign_in_page.close()
 
 @pytest.mark.ui_rozetka
-def test_get_link_in_banner():
-    rozetka = RozetkaMainPage()
-    rozetka.banner_get_link()
-    assert rozetka.link_in_banner == "https://rozetka.com.ua/ua/promo/rztk/"
-    
-    rozetka.driver.quit()
-
-@pytest.mark.ui_rozetka
-def test_close_banner():
-    rozetka = RozetkaMainPage()
-    assert rozetka.banner_close() != -1
-    assert rozetka.banner_before_closed == True
-    
-    rozetka.driver.quit()
-
-@pytest.mark.ui_rozetka
 def test_search_field():
     rozetka = RozetkaMainPage()
     rozetka.search_field()
@@ -60,7 +44,7 @@ def test_authorization_menu():
 
     rozetka.driver.quit()
 
-@pytest.mark.rozetka
+@pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
     rozetka.comparison_prices(3)
@@ -74,7 +58,7 @@ def test_check_prices_sales_laptop():
 
     rozetka.driver.quit()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_select_sorting():
     quantity_of_tests = 3
     rozetka = RozetkaLaptopsPage()
