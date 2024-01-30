@@ -71,7 +71,7 @@ def test_select_sorting():
     price_after_sorting = rozetka.new_prices_list
 
     assert price_before_sorting != price_after_sorting
-    is_sort_low_to_high = True
+    
     index = 0
     if len(price_after_sorting) > 1:
         for i in range(1, quantity_of_tests):
@@ -79,5 +79,11 @@ def test_select_sorting():
     
     rozetka.driver.close()
 
-# @pytest.mark.ui
-# def 
+@pytest.mark.ui_rozetka
+def test_checkbox_filter_by_brand():
+    rozetka = RozetkaLaptopsPage()
+    rozetka.select_checkbox_brand()    
+    for brand in rozetka.get_titles_from_goods_tiles(5):
+        assert brand.find("ASUS") != -1
+
+    rozetka.driver.close()

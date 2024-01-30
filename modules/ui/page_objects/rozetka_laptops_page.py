@@ -81,3 +81,29 @@ class RozetkaLaptopsPage(BasePage):
                     rz-catalog-settings/div/rz-sort/select"))
         sorting_button.select_by_visible_text("Від дорогих до дешевих")
         time.sleep(3)
+
+    def get_titles_from_goods_tiles(self, quantity_goods):
+        time.sleep(1)
+        titles_list = []
+        goods_list = self.driver.find_elements(
+            By.XPATH, "//span[@class='goods-tile__title']")
+        brands_name_inside_title = ""
+        index = 0
+        for element in goods_list:
+            brands_name_inside_title = element.text
+            titles_list.append(brands_name_inside_title)
+            index += 1
+            if index == quantity_goods:
+                break
+
+        return titles_list
+
+    def select_checkbox_brand(self):
+        checkbox = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
+                rz-catalog/div/div/aside/rz-filter-stack/div[2]/div/\
+                    rz-scrollbar/div/div[1]/div/div/rz-filter-section-autocomplete/\
+                        ul[1]/li[1]/a")
+
+        checkbox.click()        
+
