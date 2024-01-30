@@ -12,6 +12,7 @@ def test_check_incorrect_username_page_object():
     assert sign_in_page.check_title('Sign in to GitHub · GitHub')
     sign_in_page.close()
 
+
 @pytest.mark.ui_rozetka
 def test_search_field():
     rozetka = RozetkaMainPage()
@@ -20,7 +21,8 @@ def test_search_field():
     assert rozetka.header == 'Ноутбуки'
     assert rozetka.first_good.find("Ноутбук") != -1
 
-    rozetka.driver.quit()
+    rozetka.driver.close()
+
 
 @pytest.mark.ui_rozetka
 def test_menu_categories():
@@ -28,8 +30,9 @@ def test_menu_categories():
     for link in rozetka.menu_categories():
         rozetka.go_to(link)
         assert rozetka.driver.title != rozetka.title_main_page
-    
-    rozetka.driver.quit()
+
+    rozetka.driver.close()
+
 
 @pytest.mark.ui_rozetka
 def test_authorization_menu():
@@ -38,11 +41,12 @@ def test_authorization_menu():
     assert rozetka.popup_authorization.is_displayed()
     assert rozetka.popup_authorization_facebook.is_displayed()
     assert rozetka.popup_authorization_google.is_displayed()
-    
+
     rozetka.remind_password.click()
     assert rozetka.popup_remind_password.is_displayed()
 
-    rozetka.driver.quit()
+    rozetka.driver.close()
+
 
 @pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop():
@@ -56,7 +60,8 @@ def test_check_prices_sales_laptop():
         assert price == rozetka.prices_on_goods_pages_list[index]
         index += 1
 
-    rozetka.driver.quit()
+    rozetka.driver.close()
+
 
 @pytest.mark.ui_rozetka
 def test_select_sorting():
@@ -71,19 +76,37 @@ def test_select_sorting():
     price_after_sorting = rozetka.new_prices_list
 
     assert price_before_sorting != price_after_sorting
-    
+
     index = 0
     if len(price_after_sorting) > 1:
         for i in range(1, quantity_of_tests):
             assert price_after_sorting[i] < price_after_sorting[i-1]
-    
+
     rozetka.driver.close()
+
 
 @pytest.mark.ui_rozetka
 def test_checkbox_filter_by_brand():
     rozetka = RozetkaLaptopsPage()
-    rozetka.select_checkbox_brand()    
+    rozetka.select_checkbox_brand_ASUS()
     for brand in rozetka.get_titles_from_goods_tiles(5):
         assert brand.find("ASUS") != -1
 
     rozetka.driver.close()
+
+
+@pytest.mark.ui
+def test_changing_price_range_by_fiter():
+    rozetka = RozetkaLaptopsPage()
+    rozetka.get_price_from_filters_field()
+    rozetka.changing_price_range_by_slider_filter()
+    value_from_field = rozetka.range_filter_finish.get_attribute('value')
+
+    assert rozetka.range_filter_start.get_attribute(
+        'value') == value_from_field        
+
+    rozetka.click_ok_button_in_fiters()
+
+    rozetka.finding_prices_on_page(1)
+    element = rozetka.range_filter_finish
+    assert rozetka.new_prices_list[0] <= int(value_from_field)

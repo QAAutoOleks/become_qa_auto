@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.action_chains import ActionChains 
 import time
 
 
@@ -11,6 +12,7 @@ class RozetkaLaptopsPage(BasePage):
     def __init__(self):
         super().__init__()
         RozetkaLaptopsPage.go_to(self)
+        self.action = ActionChains(self.driver)
 
     def go_to(self, link='https://rozetka.com.ua/ua/notebooks/c80004/'):
         self.driver.get(link)
@@ -98,12 +100,51 @@ class RozetkaLaptopsPage(BasePage):
 
         return titles_list
 
-    def select_checkbox_brand(self):
+    def select_checkbox_brand_ASUS(self):
         checkbox = self.driver.find_element(
             By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
                 rz-catalog/div/div/aside/rz-filter-stack/div[2]/div/\
                     rz-scrollbar/div/div[1]/div/div/rz-filter-section-autocomplete/\
                         ul[1]/li[1]/a")
 
-        checkbox.click()        
+        checkbox.click()
 
+    def get_price_from_filters_field(self):
+        time.sleep(1)
+        self.range_filter_start = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/\
+                main/rz-catalog/div/div/aside/rz-filter-stack/div[3]/\
+                    div/rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
+                        form/fieldset/div/input[1]")
+        self.range_filter_finish = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
+                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
+                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
+                        form/fieldset/div/input[2]")
+
+    def changing_price_range_by_slider_filter(self):
+        slider_start = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
+                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
+                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
+                        form/rz-range-slider/div/div/button[2]")
+        slider_finish = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
+                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
+                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
+                        form/rz-range-slider/div/div/button[1]")
+
+        self.action.move_to_element(slider_start).drag_and_drop(slider_start, slider_finish)
+        self.action.pause(1)
+        self.action.perform()
+        time.sleep(3)
+
+    def click_ok_button_in_fiters(self):
+        ok_button = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
+                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
+                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
+                        form/fieldset/div/button")
+        self.action.click(on_element = ok_button)                
+        self.action.pause(2)
+        self.action.perform()
