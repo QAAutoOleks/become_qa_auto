@@ -27,14 +27,14 @@ class RozetkaMainPage(BasePage):
         time.sleep(2)
         self.header = self.driver.find_element(
             By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/div[1]/div/h1").text
-        first_good = self.driver.find_element(
+        first_goods = self.driver.find_element(
             By.XPATH, "/html[1]/body[1]/app-root[1]/div[1]/div[1]\
                 /rz-category[1]/div[1]/main[1]/rz-catalog[1]/div[1]\
                     /div[1]/section[1]/rz-grid[1]/ul[1]/li[1]\
                         /rz-catalog-tile[1]/app-goods-tile-default[1]\
                             /div[1]/div[2]/div[1]/rz-button-product-page[2]/a[1]"
         ).text
-        self.first_good = str(first_good)
+        self.first_goods = str(first_goods)
 
     def menu_categories(self):
         self.title_main_page = self.driver.title

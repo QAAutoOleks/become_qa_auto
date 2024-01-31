@@ -1,6 +1,7 @@
 from modules.ui.page_objects.sign_in_page import SignInPage
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
+from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 import pytest
 
 
@@ -19,7 +20,7 @@ def test_search_field():
     rozetka.search_field()
     assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
     assert rozetka.header == 'Ноутбуки'
-    assert rozetka.first_good.find("Ноутбук") != -1
+    assert rozetka.first_goods.find("Ноутбук") != -1
 
     rozetka.driver.close()
 
@@ -95,7 +96,7 @@ def test_checkbox_filter_by_brand():
     rozetka.driver.close()
 
 
-@pytest.mark.ui
+@pytest.mark.ui_rozetka
 def test_changing_price_range_by_fiter():
     rozetka = RozetkaLaptopsPage()
     rozetka.get_price_from_filters_field()
@@ -110,3 +111,8 @@ def test_changing_price_range_by_fiter():
     rozetka.finding_prices_on_page(1)
     element = rozetka.range_filter_finish
     assert rozetka.new_prices_list[0] <= int(value_from_field)
+
+@pytest.mark.ui_not_ready
+def test_price_in_goods_page_and_at_cart_popup():
+    rozetka = RozetkaGoodsPage()
+    rozetka.find_price()

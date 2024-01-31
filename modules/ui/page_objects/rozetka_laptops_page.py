@@ -137,7 +137,6 @@ class RozetkaLaptopsPage(BasePage):
         self.action.move_to_element(slider_start).drag_and_drop(slider_start, slider_finish)
         self.action.pause(1)
         self.action.perform()
-        time.sleep(3)
 
     def click_ok_button_in_fiters(self):
         ok_button = self.driver.find_element(
@@ -146,5 +145,5 @@ class RozetkaLaptopsPage(BasePage):
                     rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
                         form/fieldset/div/button")
         self.action.click(on_element = ok_button)                
-        self.action.pause(2)
+        self.action.pause(1)
         self.action.perform()
