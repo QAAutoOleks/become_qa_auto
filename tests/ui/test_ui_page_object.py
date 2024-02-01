@@ -26,7 +26,7 @@ def test_search_field():
 
 
 @pytest.mark.ui_rozetka
-def test_menu_categories():
+def test_links_of_menu_categories():
     rozetka = RozetkaMainPage()
     for link in rozetka.menu_categories():
         rozetka.go_to(link)
@@ -112,10 +112,14 @@ def test_changing_price_range_by_fiter():
     element = rozetka.range_filter_finish
     assert rozetka.new_prices_list[0] <= int(value_from_field)
 
-@pytest.mark.ui_not_ready
+    rozetka.driver.close()
+
+@pytest.mark.ui_rozetka
 def test_price_in_goods_page_and_at_cart_popup():
     rozetka = RozetkaGoodsPage()
     price_on_page = rozetka.find_price_goods_page()
     rozetka.find_and_click_to_buy_button()
     price_in_cart = rozetka.find_price_in_popup_window_cart()
     assert price_on_page == price_in_cart
+
+    rozetka.driver.close()

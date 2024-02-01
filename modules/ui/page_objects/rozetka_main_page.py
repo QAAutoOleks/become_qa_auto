@@ -36,12 +36,12 @@ class RozetkaMainPage(BasePage):
         ).text
         self.first_goods = str(first_goods)
 
-    def menu_categories(self):
+    def menu_categories_get_links(self):
         self.title_main_page = self.driver.title
-        time.sleep(1)
         links_list = []
         menu_list = self.driver.find_elements(
             By.XPATH, "//a[@class='menu-categories__link']")
+
         for element in menu_list:
             link = element.get_attribute('href')
             links_list.append(link)
