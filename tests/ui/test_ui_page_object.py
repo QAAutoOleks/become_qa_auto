@@ -2,6 +2,7 @@ from modules.ui.page_objects.sign_in_page import SignInPage
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
+import time
 import pytest
 
 
@@ -28,8 +29,9 @@ def test_search_field():
 @pytest.mark.ui_rozetka
 def test_links_of_menu_categories():
     rozetka = RozetkaMainPage()
-    for link in rozetka.menu_categories():
+    for link in rozetka.menu_categories_get_links():
         rozetka.go_to(link)
+        time.sleep(1)
         assert rozetka.driver.title != rozetka.title_main_page
 
     rozetka.driver.close()
