@@ -16,14 +16,17 @@ class RozetkaGoodsPage(BasePage):
 
     def go_to(self, link='https://rozetka.com.ua/ua/lenovo-82rk011nra/p400966992/'):
         self.driver.get(link)
-
+        
     def convert_str_to_int(self, str_input):
         str_digital = ""
         for symbol in str_input:
             if symbol.isnumeric():
                 str_digital += symbol
 
-        return int(str_digital)
+        if len(str_digital) > 0:
+            return int(str_digital)
+        else:
+            return 0
 
     def find_price_goods_page(self):
         old_price = self.driver.find_element(

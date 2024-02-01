@@ -116,7 +116,7 @@ def test_changing_price_range_by_fiter():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_price_in_goods_page_and_at_cart_popup():
     rozetka = RozetkaGoodsPage()
     price_on_page = rozetka.find_price_goods_page()

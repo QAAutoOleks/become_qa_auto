@@ -13,7 +13,7 @@ class RozetkaMainPage(BasePage):
         self.wait = WebDriverWait(self.driver, timeout=10, poll_frequency=.2)
 
     def go_to(self, link='https://rozetka.com.ua/ua/'):
-        self.driver.get(link)        
+        self.driver.get(link)
 
     def search_field(self):
         time.sleep(1)

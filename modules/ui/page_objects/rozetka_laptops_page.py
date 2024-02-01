@@ -1,4 +1,5 @@
 from modules.ui.page_objects.base_page import BasePage
+from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,7 +8,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-class RozetkaLaptopsPage(BasePage):
+class RozetkaLaptopsPage(RozetkaGoodsPage):
 
     def __init__(self):
         super().__init__()
@@ -28,23 +29,19 @@ class RozetkaLaptopsPage(BasePage):
         for element in self.goods_list:
             index_search = element.text.find('₴')
             old_price = element.text[index_search-7:index_search]
-            old_price_digital = ""
 
-            for symbol in old_price:
-                if symbol.isnumeric():
-                    old_price_digital += symbol
-            self.old_prices_list.append(int(old_price_digital))
+            old_price_int = RozetkaGoodsPage.convert_str_to_int(
+                self, old_price)
+            self.old_prices_list.append(old_price_int)
 
             new_price = element.text[index_search+1:index_search+9]
-            new_price_digital = ""
+            new_price_int = RozetkaGoodsPage.convert_str_to_int(
+                self, new_price)
 
-            for p in new_price:
-                if p.isnumeric():
-                    new_price_digital += p
-            if new_price_digital == "":
-                self.new_prices_list.append(int(old_price_digital))
+            if new_price_int == 0:
+                self.new_prices_list.append(old_price_int)
             else:
-                self.new_prices_list.append(int(new_price_digital))
+                self.new_prices_list.append(new_price_int)
 
             counter_of_goods_tests += 1
             if counter_of_goods_tests == quantity_of_tests:
