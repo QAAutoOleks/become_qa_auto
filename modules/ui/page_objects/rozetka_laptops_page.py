@@ -30,9 +30,9 @@ class RozetkaLaptopsPage(BasePage):
             old_price = element.text[index_search-7:index_search]
             old_price_digital = ""
 
-            for p in old_price:
-                if p.isnumeric():
-                    old_price_digital += p
+            for symbol in old_price:
+                if symbol.isnumeric():
+                    old_price_digital += symbol
             self.old_prices_list.append(int(old_price_digital))
 
             new_price = element.text[index_search+1:index_search+9]
@@ -134,7 +134,8 @@ class RozetkaLaptopsPage(BasePage):
                     rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
                         form/rz-range-slider/div/div/button[1]")
 
-        self.action.move_to_element(slider_start).drag_and_drop(slider_start, slider_finish)
+        self.action.move_to_element(slider_start).drag_and_drop(
+            slider_start, slider_finish)
         self.action.pause(1)
         self.action.perform()
 

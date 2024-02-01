@@ -115,7 +115,7 @@ def test_changing_price_range_by_fiter():
 @pytest.mark.ui_not_ready
 def test_price_in_goods_page_and_at_cart_popup():
     rozetka = RozetkaGoodsPage()
-    price_on_page = rozetka.find_price_goods_page().text
+    price_on_page = rozetka.find_price_goods_page()
     rozetka.find_and_click_to_buy_button()
-    price_in_cart = rozetka.find_price_in_popup_window_cart().text
+    price_in_cart = rozetka.find_price_in_popup_window_cart()
     assert price_on_page == price_in_cart

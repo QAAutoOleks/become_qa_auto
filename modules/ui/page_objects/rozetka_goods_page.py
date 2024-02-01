@@ -17,12 +17,23 @@ class RozetkaGoodsPage(BasePage):
     def go_to(self, link='https://rozetka.com.ua/ua/lenovo-82rk011nra/p400966992/'):
         self.driver.get(link)
 
+    def convert_str_to_int(self, str_input):
+        str_digital = ""
+        for symbol in str_input:
+            if symbol.isnumeric():
+                str_digital += symbol
+
+        return int(str_digital)
+
     def find_price_goods_page(self):
         old_price = self.driver.find_element(
             By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
             rz-product-main-info/div[1]/div[1]/div[1]/p[2]')
 
-        return old_price
+        old_price_int = RozetkaGoodsPage.convert_str_to_int(
+            self, old_price.text)
+
+        return int(old_price_int)
 
     def find_price_in_popup_window_cart(self):
         time.sleep(1)
@@ -31,7 +42,10 @@ class RozetkaGoodsPage(BasePage):
                 div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
                     ul/li/rz-cart-product/div/div[2]/div/p[2]")
 
-        return price_in_cart
+        price_in_cart_int = RozetkaGoodsPage.convert_str_to_int(
+            self, price_in_cart.text)
+
+        return price_in_cart_int
 
     def find_and_click_to_buy_button(self):
         time.sleep(1)
