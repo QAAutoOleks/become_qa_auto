@@ -58,3 +58,16 @@ class RozetkaGoodsPage(BasePage):
                 rz-product-buy-btn/app-buy-button/button')
 
         button_to_buy.click()
+
+    def change_quantity_in_cart(self):
+        time.sleep(1)
+        self.plus_button_in_cart_window = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
+                    ul/li/rz-cart-product/div/div[2]/\
+                        rz-cart-counter/div/button[2]")
+        self.minus_button_in_cart_window = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
+                    ul/li/rz-cart-product/div/div[2]/\
+                        rz-cart-counter/div/button[1]")

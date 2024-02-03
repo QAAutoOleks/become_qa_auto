@@ -116,7 +116,7 @@ def test_changing_price_range_by_fiter():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_price_in_goods_page_and_at_cart_popup():
     rozetka = RozetkaGoodsPage()
     price_on_page = rozetka.find_price_goods_page()
@@ -125,3 +125,21 @@ def test_price_in_goods_page_and_at_cart_popup():
     assert price_on_page == price_in_cart
 
     rozetka.driver.close()
+
+@pytest.mark.ui_not_ready
+def test_change_quantity_of_goods_in_cart():
+    rozetka = RozetkaGoodsPage()
+    rozetka.find_and_click_to_buy_button()
+    rozetka.change_quantity_in_cart()
+    price_in_cart = rozetka.find_price_in_popup_window_cart()
+    rozetka.plus_button_in_cart_window.click()
+    changed_price = rozetka.find_price_in_popup_window_cart()
+
+    assert changed_price == 2 * price_in_cart
+
+    rozetka.minus_button_in_cart_window.click()
+    changed_price = rozetka.find_price_in_popup_window_cart()
+    assert changed_price == price_in_cart
+
+    rozetka.driver.close()
+
