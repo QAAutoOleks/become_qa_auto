@@ -126,7 +126,7 @@ def test_price_in_goods_page_and_at_cart_popup():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_change_quantity_of_goods_in_cart():
     rozetka = RozetkaGoodsPage()
     rozetka.find_and_click_to_buy_button()
