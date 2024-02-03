@@ -42,8 +42,8 @@ class RozetkaGoodsPage(BasePage):
         time.sleep(1)
         price_in_cart = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
-                    ul/li/rz-cart-product/div/div[2]/div/p[2]")
+                div[3]/div[2]/rz-shopping-cart/div/div[1]/\
+                    div/div/div/span")
 
         price_in_cart_int = RozetkaGoodsPage.convert_str_to_int(
             self, price_in_cart.text)
@@ -71,3 +71,27 @@ class RozetkaGoodsPage(BasePage):
                 div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
                     ul/li/rz-cart-product/div/div[2]/\
                         rz-cart-counter/div/button[1]")
+
+    def add_extra_services(self):
+        time.sleep(1)
+        checkbox_garanty_services = self.driver.find_element(
+            By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
+            rz-product-main-info/rz-product-services/div/\
+                rz-additional-services/div/rz-service-group[1]/\
+                    div/div/label'
+        )
+        checkbox_garanty_services.click()
+
+    def find_price_of_extra_service_garanty(self):
+        time.sleep(1)
+        price_of_extra_service = self.driver.find_element(
+            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
+                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
+                    ul/li/rz-cart-product/div/rz-cart-additional-services/\
+                        div/rz-additional-services/div/rz-service-group[1]/\
+                            div/ul/li[1]/rz-service-product/div/div/label/\
+                                div/div[2]/div")
+        price_int = RozetkaGoodsPage.convert_str_to_int(
+            self, price_of_extra_service.text)
+        
+        return price_int
