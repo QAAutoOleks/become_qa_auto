@@ -71,4 +71,12 @@ class RozetkaMainPage(BasePage):
         self.popup_remind_password = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]")
-        
+    
+    def social_networks_icon(self):
+        time.sleep(1)
+        all_socials_networks_icons = self.driver.find_element(
+            By.CLASS_NAME, "socials__list")
+        each_icon_list = all_socials_networks_icons.find_elements(
+            By.TAG_NAME, "li")
+
+        return each_icon_list

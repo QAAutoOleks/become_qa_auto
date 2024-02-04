@@ -50,6 +50,14 @@ def test_authorization_menu():
 
     rozetka.driver.close()
 
+@pytest.mark.ui_rozetka
+def test_icons_of_social_networks_is_displayed():
+    rozetka = RozetkaMainPage()
+
+    for icon in rozetka.social_networks_icon():
+        assert icon.is_displayed
+    
+    rozetka.driver.close()
 
 @pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop():
@@ -155,6 +163,4 @@ def test_adding_extra_services_garanty():
     assert price_of_extra_service + price_on_page == changed_price
 
     rozetka.driver.close()
-
-
 
