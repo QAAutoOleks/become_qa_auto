@@ -82,7 +82,6 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
         time.sleep(3)
 
     def get_titles_from_goods_tiles(self, quantity_goods):
-        time.sleep(1)
         titles_list = []
         goods_list = self.driver.find_elements(
             By.XPATH, "//span[@class='goods-tile__title']")
@@ -107,7 +106,6 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
         checkbox.click()
 
     def get_price_from_filters_field(self):
-        time.sleep(1)
         self.range_filter_start = self.driver.find_element(
             By.XPATH, "/html/body/app-root/div/div/rz-category/div/\
                 main/rz-catalog/div/div/aside/rz-filter-stack/div[3]/\

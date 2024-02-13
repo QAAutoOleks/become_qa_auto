@@ -16,15 +16,12 @@ class RozetkaMainPage(BasePage):
         self.driver.get(link)
 
     def find_search_field(self):
-        time.sleep(1)
         search_feald = self.driver.find_element(
             By.CSS_SELECTOR, "input[placeholder='Я шукаю...']")
         search_feald.send_keys('laptop')
-        time.sleep(1)
         button = self.driver.find_element(
             By.XPATH, "//button[contains(text(),'Знайти')]")
         button.click()
-        time.sleep(2)
         self.header = self.driver.find_element(
             By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/div[1]/div/h1").text
         first_goods = self.driver.find_element(

@@ -39,7 +39,6 @@ class RozetkaGoodsPage(BasePage):
         return int(old_price_int)
 
     def find_price_in_popup_window_cart(self):
-        time.sleep(1)
         price_in_cart = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-shopping-cart/div/div[1]/\
@@ -51,7 +50,6 @@ class RozetkaGoodsPage(BasePage):
         return price_in_cart_int
 
     def find_and_click_to_buy_button(self):
-        time.sleep(1)
         button_to_buy = self.driver.find_element(
             By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
             rz-product-main-info/div[1]/div[1]/div[3]/\
@@ -60,7 +58,6 @@ class RozetkaGoodsPage(BasePage):
         button_to_buy.click()
 
     def change_quantity_in_cart(self):
-        time.sleep(1)
         self.plus_button_in_cart_window = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
@@ -73,7 +70,6 @@ class RozetkaGoodsPage(BasePage):
                         rz-cart-counter/div/button[1]")
 
     def add_extra_services(self):
-        time.sleep(1)
         checkbox_garanty_services = self.driver.find_element(
             By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
             rz-product-main-info/rz-product-services/div/\
@@ -83,7 +79,6 @@ class RozetkaGoodsPage(BasePage):
         checkbox_garanty_services.click()
 
     def find_price_of_extra_service_garanty(self):
-        time.sleep(1)
         price_of_extra_service = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
