@@ -15,7 +15,7 @@ class RozetkaMainPage(BasePage):
     def go_to(self, link='https://rozetka.com.ua/ua/'):
         self.driver.get(link)
 
-    def search_field(self):
+    def find_search_field(self):
         time.sleep(1)
         search_feald = self.driver.find_element(
             By.CSS_SELECTOR, "input[placeholder='Я шукаю...']")
@@ -36,7 +36,7 @@ class RozetkaMainPage(BasePage):
         ).text
         self.first_goods = str(first_goods)
 
-    def menu_categories_get_links(self):
+    def find_menu_categories_get_links(self):
         self.title_main_page = self.driver.title
         links_list = []
         menu_list = self.driver.find_elements(
@@ -48,7 +48,7 @@ class RozetkaMainPage(BasePage):
         
         return links_list
 
-    def authorization_menu(self):
+    def find_authorization_menu(self):
         authorization_button = self.driver.find_element(
             By.XPATH, "/html/body/app-root/div/div/rz-header/\
                 rz-main-header/header/div/div/ul/li[3]/rz-user/button")
@@ -72,7 +72,7 @@ class RozetkaMainPage(BasePage):
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]")
     
-    def social_networks_icon(self):
+    def find_social_networks_icon(self):
         time.sleep(1)
         all_socials_networks_icons = self.driver.find_element(
             By.CLASS_NAME, "socials__list")

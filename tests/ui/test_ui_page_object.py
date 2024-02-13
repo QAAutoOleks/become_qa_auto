@@ -18,7 +18,7 @@ def test_check_incorrect_username_page_object():
 @pytest.mark.ui_rozetka
 def test_search_field():
     rozetka = RozetkaMainPage()
-    rozetka.search_field()
+    rozetka.find_search_field()
     assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
     assert rozetka.header == 'Ноутбуки'
     assert rozetka.first_goods.find("Ноутбук") != -1
@@ -29,7 +29,7 @@ def test_search_field():
 @pytest.mark.ui_rozetka
 def test_links_of_menu_categories():
     rozetka = RozetkaMainPage()
-    for link in rozetka.menu_categories_get_links():
+    for link in rozetka.find_menu_categories_get_links():
         rozetka.go_to(link)
         time.sleep(1)
         assert rozetka.driver.title != rozetka.title_main_page
@@ -40,7 +40,7 @@ def test_links_of_menu_categories():
 @pytest.mark.ui_rozetka
 def test_authorization_menu():
     rozetka = RozetkaMainPage()
-    rozetka.authorization_menu()
+    rozetka.find_authorization_menu()
     assert rozetka.popup_authorization.is_displayed()
     assert rozetka.popup_authorization_facebook.is_displayed()
     assert rozetka.popup_authorization_google.is_displayed()
@@ -54,7 +54,7 @@ def test_authorization_menu():
 def test_icons_of_social_networks_is_displayed():
     rozetka = RozetkaMainPage()
 
-    for icon in rozetka.social_networks_icon():
+    for icon in rozetka.find_social_networks_icon():
         assert icon.is_displayed
     
     rozetka.driver.close()
