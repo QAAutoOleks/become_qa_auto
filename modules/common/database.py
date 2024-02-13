@@ -46,6 +46,58 @@ class Database():
         self.cursor.execute(old_table_products)
         self.connection.commit()
 
+        
+    def get_list_of_data_orders(self):
+        query = f"SELECT \
+            orders.id_orders, \
+            customers.id, \
+            products.name, \
+            products.description, \
+            orders.date_of_order\
+            FROM orders\
+            JOIN customers ON orders.customers_id = customers.id\
+            JOIN products ON orders.products_id = products.id"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+
+        return record
+
+    def get_orders_inner_join_customers_and_products_by_name_of_product(self, product_name):
+        sql = f"""SELECT 
+            name_of_product, 
+            quantity_of_product, 
+            date_of_order, 
+            customers.name,
+            products.description 
+            FROM orders 
+            INNER JOIN customers 
+            ON orders.customers_id = customers.id 
+            INNER JOIN products 
+            ON products.id = orders.products_id
+            WHERE products.name = '{product_name}';"""
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+
+        return result
+
+    def get_orders_inner_join_customers_and_products_by_name_of_customer(self, customer_name):
+        sql = f"""SELECT 
+            customers.name,
+            products.name,
+            orders.quantity_of_product, 
+            orders.date_of_order,
+            products.description 
+            FROM customers 
+            INNER JOIN orders 
+            ON customers.id = orders.customers_id 
+            INNER JOIN products 
+            ON products.id = orders.products_id
+            WHERE customers.name = '{customer_name}';"""
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+
+        return result
+
     def testing_connection(self):
         sqlite_select_Query = "SELECT sqlite_version();"
         self.cursor.execute(sqlite_select_Query)
@@ -153,57 +205,6 @@ class Database():
         record = self.cursor.fetchall()
 
         return record
-
-    def get_list_of_data_orders(self):
-        query = f"SELECT \
-            orders.id_orders, \
-            customers.id, \
-            products.name, \
-            products.description, \
-            orders.date_of_order\
-            FROM orders\
-            JOIN customers ON orders.customers_id = customers.id\
-            JOIN products ON orders.products_id = products.id"
-        self.cursor.execute(query)
-        record = self.cursor.fetchall()
-
-        return record
-
-    def get_orders_inner_join_customers_and_products_by_name_of_product(self, product_name):
-        sql = f"""SELECT 
-            name_of_product, 
-            quantity_of_product, 
-            date_of_order, 
-            customers.name,
-            products.description 
-            FROM orders 
-            INNER JOIN customers 
-            ON orders.customers_id = customers.id 
-            INNER JOIN products 
-            ON products.id = orders.products_id
-            WHERE products.name = '{product_name}';"""
-        self.cursor.execute(sql)
-        result = self.cursor.fetchall()
-
-        return result
-
-    def get_orders_inner_join_customers_and_products_by_name_of_customer(self, customer_name):
-        sql = f"""SELECT 
-            customers.name,
-            products.name,
-            orders.quantity_of_product, 
-            orders.date_of_order,
-            products.description 
-            FROM customers 
-            INNER JOIN orders 
-            ON customers.id = orders.customers_id 
-            INNER JOIN products 
-            ON products.id = orders.products_id
-            WHERE customers.name = '{customer_name}';"""
-        self.cursor.execute(sql)
-        result = self.cursor.fetchall()
-
-        return result
 
     def delete_order(self, order_id):
         query = f"DELETE FROM orders WHERE id = {order_id}"
