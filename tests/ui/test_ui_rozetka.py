@@ -1,8 +1,7 @@
+import pytest
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
-import time
-import pytest
 
 
 @pytest.mark.ui_rozetka
@@ -21,13 +20,12 @@ def test_links_of_menu_categories_not_broken():
     rozetka = RozetkaMainPage()
     for link in rozetka.find_menu_categories_get_links():
         rozetka.go_to(link)
-        time.sleep(1)
         assert rozetka.driver.title != rozetka.title_main_page
 
     rozetka.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_authorization_menu_if_all_icons_displayed():
     rozetka = RozetkaMainPage()
     rozetka.find_authorization_menu()
@@ -124,7 +122,7 @@ def test_price_in_goods_page_and_at_cart_popup():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_change_quantity_of_goods_in_cart():
     rozetka = RozetkaGoodsPage()
     rozetka.find_and_click_to_buy_button()
