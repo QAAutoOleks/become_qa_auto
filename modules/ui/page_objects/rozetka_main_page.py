@@ -42,6 +42,10 @@ class RozetkaMainPage(BasePage):
         else:
             return 0
 
+    # Method for checking functionality of search field.
+    # Enter query in the search field. After reloading 
+    # the page, checking the page header and 
+    # goods name in catalog.
     def find_search_field_and_send_request(self):
         search_feald = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
@@ -66,6 +70,7 @@ class RozetkaMainPage(BasePage):
             )))
         self.first_good = str(first_good.text)
 
+    # Checking links of menu categories isn't broken
     def find_menu_categories_get_links(self):
         self.title_main_page = self.driver.title
         links_list = []
@@ -78,6 +83,9 @@ class RozetkaMainPage(BasePage):
 
         return links_list
 
+    # Checking authorization button and icons in 
+    # authorization menu are displayed (Facebook, 
+    # Google, Remind password etc.).
     def find_authorization_menu(self):
         authorization_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
