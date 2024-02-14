@@ -49,7 +49,7 @@ def test_icons_of_social_networks_on_main_page_is_displayed():
     
     rozetka.driver.close()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
     rozetka.comparison_prices(3)
@@ -64,17 +64,19 @@ def test_check_prices_sales_laptop():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_select_sorting_from_high_to_low_price():
     quantity_of_tests = 3
     rozetka = RozetkaLaptopsPage()
     rozetka.finding_prices_on_page(quantity_of_tests)
     price_before_sorting = rozetka.new_prices_list
+    print(price_before_sorting)
 
     rozetka.select_sorting()
 
     rozetka.finding_prices_on_page(quantity_of_tests)
     price_after_sorting = rozetka.new_prices_list
+    print(price_after_sorting)
 
     assert price_before_sorting != price_after_sorting
 

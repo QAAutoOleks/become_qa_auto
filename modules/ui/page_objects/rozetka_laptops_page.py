@@ -1,5 +1,4 @@
-from modules.ui.page_objects.base_page import BasePage
-from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
+from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,20 +7,17 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-class RozetkaLaptopsPage(RozetkaGoodsPage):
+class RozetkaLaptopsPage(RozetkaMainPage):
 
-    def __init__(self):
-        super().__init__()
-        RozetkaLaptopsPage.go_to(self)
+    def __init__(self, link='https://rozetka.com.ua/ua/'):
+        super().__init__(link='https://rozetka.com.ua/ua/notebooks/c80004/')
         self.action = ActionChains(self.driver)
 
-    def go_to(self, link='https://rozetka.com.ua/ua/notebooks/c80004/'):
-        self.driver.get(link)
-
     def finding_prices_on_page(self, quantity_of_tests):
-        self.driver.implicitly_wait(2)
+        time.sleep(3)
         self.goods_list = self.driver.find_elements(
             By.XPATH, "//div[@class='goods-tile__content']")
+        print(len(self.goods_list))
         self.old_prices_list = []
         self.new_prices_list = []
 
@@ -30,12 +26,12 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
             index_search = element.text.find('₴')
             old_price = element.text[index_search-7:index_search]
 
-            old_price_int = RozetkaGoodsPage.convert_str_to_int(
+            old_price_int = RozetkaMainPage.convert_str_to_int(
                 self, old_price)
             self.old_prices_list.append(old_price_int)
 
             new_price = element.text[index_search+1:index_search+9]
-            new_price_int = RozetkaGoodsPage.convert_str_to_int(
+            new_price_int = RozetkaMainPage.convert_str_to_int(
                 self, new_price)
 
             if new_price_int == 0:
@@ -48,7 +44,7 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
                 break
 
     def comparison_prices(self, quantity_of_tests):
-        self.driver.implicitly_wait(1)
+        self.driver.implicitly_wait(3)
         RozetkaLaptopsPage.finding_prices_on_page(self, quantity_of_tests)
 
         self.prices_on_goods_pages_list = []
@@ -74,10 +70,11 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
                 break
 
     def select_sorting(self):
-        sorting_button = Select(self.driver.find_element(
+        sorting_button = Select(WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((
             By.XPATH, "/html/body/app-root/div/div/\
                 rz-category/div/main/rz-catalog/div/\
-                    rz-catalog-settings/div/rz-sort/select"))
+                    rz-catalog-settings/div/rz-sort/select"))))
         sorting_button.select_by_visible_text("Від дорогих до дешевих")
 
     def get_titles_from_goods_tiles(self, quantity_goods):

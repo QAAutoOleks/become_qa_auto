@@ -8,24 +8,9 @@ import time
 
 class RozetkaGoodsPage(RozetkaMainPage):
 
-    def __init__(self):
-        super().__init__()
-        RozetkaGoodsPage.go_to(self)
+    def __init__(self, link):
+        super().__init__(link='https://rozetka.com.ua/ua/lenovo-82rk011nra/p400966992/')
         self.action = ActionChains(self.driver)
-
-    def go_to(self, link='https://rozetka.com.ua/ua/lenovo-82rk011nra/p400966992/'):
-        self.driver.get(link)
-        
-    def convert_str_to_int(self, str_input):
-        str_digital = ""
-        for symbol in str_input:
-            if symbol.isnumeric():
-                str_digital += symbol
-
-        if len(str_digital) > 0:
-            return int(str_digital)
-        else:
-            return 0
 
     def find_price_goods_page(self):
         old_price = self.driver.find_element(
@@ -87,5 +72,5 @@ class RozetkaGoodsPage(RozetkaMainPage):
                                 div/div[2]/div")
         price_int = RozetkaGoodsPage.convert_str_to_int(
             self, price_of_extra_service.text)
-        
+
         return price_int

@@ -7,12 +7,23 @@ import time
 
 class RozetkaMainPage(BasePage):
 
-    def __init__(self):
+    def __init__(self, link='https://rozetka.com.ua/ua/'):
         super().__init__()
-        RozetkaMainPage.go_to(self)
+        RozetkaMainPage.go_to(self, link)
 
-    def go_to(self, link='https://rozetka.com.ua/ua/'):
+    def go_to(self, link):
         self.driver.get(link)
+    
+    def convert_str_to_int(self, str_input):
+        str_digital = ""
+        for symbol in str_input:
+            if symbol.isnumeric():
+                str_digital += symbol
+
+        if len(str_digital) > 0:
+            return int(str_digital)
+        else:
+            return 0
 
     def find_search_field_and_send_request(self):
         search_feald = WebDriverWait(self.driver, 10).until(
