@@ -79,7 +79,6 @@ class RozetkaLaptopsPage(RozetkaGoodsPage):
                 rz-category/div/main/rz-catalog/div/\
                     rz-catalog-settings/div/rz-sort/select"))
         sorting_button.select_by_visible_text("Від дорогих до дешевих")
-        time.sleep(3)
 
     def get_titles_from_goods_tiles(self, quantity_goods):
         titles_list = []

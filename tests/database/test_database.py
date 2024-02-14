@@ -70,6 +70,8 @@ def test_insert_product():
 def test_insert_and_delete_product():
     db = Database()
     db.insert_product(20, 'test', 'data', 999)
+    assert db.get_product_by_id(20) == [(999.0,)]
+    
     db.delete_product(20)
     assert db.get_product_by_id(20) == []
 
