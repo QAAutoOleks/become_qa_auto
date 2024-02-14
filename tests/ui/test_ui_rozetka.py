@@ -16,7 +16,7 @@ def test_search_field_working():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_links_of_menu_categories_not_broken():
     rozetka = RozetkaMainPage()
     for link in rozetka.find_menu_categories_get_links():
@@ -44,12 +44,12 @@ def test_authorization_menu_if_all_icons_displayed():
 def test_icons_of_social_networks_on_main_page_is_displayed():
     rozetka = RozetkaMainPage()
 
-    for icon in rozetka.find_social_networks_icon():
+    for icon in rozetka.find_social_networks_icons():
         assert icon.is_displayed
     
     rozetka.driver.close()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
     rozetka.comparison_prices(3)

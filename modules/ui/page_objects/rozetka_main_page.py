@@ -51,13 +51,15 @@ class RozetkaMainPage(BasePage):
         return links_list
 
     def find_authorization_menu(self):
-        authorization_button = self.driver.find_element(
+        authorization_button = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((
             By.XPATH, "/html/body/app-root/div/div/rz-header/\
-                rz-main-header/header/div/div/ul/li[3]/rz-user/button")
+                rz-main-header/header/div/div/ul/li[3]/rz-user/button")))
         authorization_button.click()
-        time.sleep(2)
-        self.popup_authorization = self.driver.find_element(
-            By.XPATH, "//div[@class='modal__content']")
+
+        self.popup_authorization = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((
+            By.XPATH, "//div[@class='modal__content']")))
         self.popup_authorization_facebook = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-user-identification/rz-auth/div/\
@@ -74,10 +76,11 @@ class RozetkaMainPage(BasePage):
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]")
 
-    def find_social_networks_icon(self):
+    def find_social_networks_icons(self):
         time.sleep(1)
-        all_socials_networks_icons = self.driver.find_element(
-            By.CLASS_NAME, "socials__list")
+        all_socials_networks_icons = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((
+            By.CLASS_NAME, "socials__list")))
         each_icon_list = all_socials_networks_icons.find_elements(
             By.TAG_NAME, "li")
 
