@@ -122,7 +122,7 @@ def test_price_in_goods_page_and_at_cart_popup():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_change_quantity_of_goods_in_cart():
     rozetka = RozetkaGoodsPage()
     rozetka.find_and_click_to_buy_button()
@@ -140,13 +140,13 @@ def test_change_quantity_of_goods_in_cart():
     rozetka.driver.close()
 
 @pytest.mark.ui_rozetka
-def test_adding_extra_services_garanty():
+def test_adding_extra_services_guarantee():
     rozetka = RozetkaGoodsPage()
     price_on_page = rozetka.find_price_goods_page()
     rozetka.add_extra_services()
     rozetka.find_and_click_to_buy_button()
     changed_price = rozetka.find_price_in_popup_window_cart()
-    price_of_extra_service = rozetka.find_price_of_extra_service_garanty()
+    price_of_extra_service = rozetka.find_price_of_extra_service_guarantee()
     
     assert price_of_extra_service + price_on_page == changed_price
 

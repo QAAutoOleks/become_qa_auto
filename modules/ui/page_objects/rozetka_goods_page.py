@@ -10,7 +10,6 @@ class RozetkaGoodsPage(RozetkaMainPage):
 
     def __init__(self, link='https://rozetka.com.ua/ua/'):
         super().__init__(link='https://rozetka.com.ua/ua/lenovo-82rk011nra/p400966992/')
-        self.action = ActionChains(self.driver)
 
     def find_price_goods_page(self):
         self.action.pause(1).perform()
@@ -56,15 +55,15 @@ class RozetkaGoodsPage(RozetkaMainPage):
                         rz-cart-counter/div/button[1]")
 
     def add_extra_services(self):
-        checkbox_garanty_services = self.driver.find_element(
+        checkbox_guarantee_services = self.driver.find_element(
             By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
             rz-product-main-info/rz-product-services/div/\
                 rz-additional-services/div/rz-service-group[1]/\
                     div/div/label'
         )
-        checkbox_garanty_services.click()
+        checkbox_guarantee_services.click()
 
-    def find_price_of_extra_service_garanty(self):
+    def find_price_of_extra_service_guarantee(self):
         price_of_extra_service = self.driver.find_element(
             By.XPATH, "/html/body/app-root/rz-single-modal-window/\
                 div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\

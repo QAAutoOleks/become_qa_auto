@@ -11,11 +11,27 @@ class RozetkaMainPage(BasePage):
     def __init__(self, link='https://rozetka.com.ua/ua/'):
         super().__init__()
         RozetkaMainPage.go_to(self, link)
+
+        # For tests which require input actions to the web browser is
+        # created object of ActionChains class.
+        # 
+        # ActionChains objects are used in tests which need to wait 
+        # certain time between actions for working correctly.
+        # Beyond that ActionChains objects are used for manipulations 
+        # with the mouse during performing tests (moving slider in filters,
+        # click on buy button on the goods page etc.).
         self.action = ActionChains(self.driver)
 
+    # Method is used for following links during tests performing.
     def go_to(self, link):
         self.driver.get(link)
 
+    # Method is applied for conversion String data to Integer data
+    # from Web elements in price comparison tests such as:
+    # increase of purchase amount after adding guarantee service,
+    # selection sorting from high to low price,
+    # price comparison on goods card in the general catalog 
+    # and on the product page, etc.
     def convert_str_to_int(self, str_input):
         str_digital = ""
         for symbol in str_input:
