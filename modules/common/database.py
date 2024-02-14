@@ -9,6 +9,9 @@ class Database():
             r"C:\\Users\\User\\Desktop\\become_qa_auto" + r"\\become_qa_auto.db")
         self.cursor = self.connection.cursor()
 
+        # In order to increase the quantity of test cases 
+        # the initial 'orders' table was changed. 
+        # Added column "quantity_of_product"
         self.cursor.execute("DROP TABLE IF EXISTS orders")
         modificate_table_orders = """CREATE TABLE orders (
             id_orders INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -22,10 +25,20 @@ class Database():
         )"""
         self.cursor.execute(modificate_table_orders)
 
+        # In order to successfully pass tests with balance of products 
+        # it is necessary to create a positive balance of products
+        # (products.quantity) before tests start
         Database.update_quantity_of_products(self, 20, 1)
         Database.update_quantity_of_products(self, 20, 2)
         Database.update_quantity_of_products(self, 20, 3)
 
+        # In order to create tests with balance of products
+        # 'quantity.products' must have 
+        # CHECK constraint (quantity >= 0)
+        # it's going to be achieved using following steps:
+
+        # Create a new table with same structure 
+        # but CHECK constraint added
         self.cursor.execute("DROP TABLE IF EXISTS temporary_products")
         modificate_table_products = """CREATE TABLE temporary_products (
             id INTEGER PRIMARY KEY,
@@ -35,11 +48,15 @@ class Database():
         )"""
         self.cursor.execute(modificate_table_products)
 
+        # Copy data from initial table
+        # to new temporary table
         new_table_products = """INSERT INTO temporary_products
         SELECT * FROM products"""
         self.cursor.execute(new_table_products)
         self.connection.commit()
 
+        # Remove initial table and
+        # rename new temporary table as initially table
         self.cursor.execute("DROP TABLE IF EXISTS products")
         old_table_products = """ALTER TABLE temporary_products 
             RENAME TO products"""
