@@ -27,7 +27,7 @@ def test_links_of_menu_categories_not_broken():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_authorization_menu_if_all_icons_displayed():
     rozetka = RozetkaMainPage()
     rozetka.find_authorization_menu()
@@ -64,7 +64,7 @@ def test_check_prices_sales_laptop():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_select_sorting_from_high_to_low_price():
     quantity_of_tests = 3
     rozetka = RozetkaLaptopsPage()

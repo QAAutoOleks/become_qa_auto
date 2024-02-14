@@ -2,6 +2,7 @@ from modules.ui.page_objects.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
@@ -10,6 +11,7 @@ class RozetkaMainPage(BasePage):
     def __init__(self, link='https://rozetka.com.ua/ua/'):
         super().__init__()
         RozetkaMainPage.go_to(self, link)
+        self.action = ActionChains(self.driver)
 
     def go_to(self, link):
         self.driver.get(link)
@@ -47,7 +49,7 @@ class RozetkaMainPage(BasePage):
                         /rz-catalog-tile[1]/app-goods-tile-default[1]\
                             /div[1]/div[2]/div[1]/rz-button-product-page[2]/a[1]"
         )))
-        self.first_goods = str(first_good.text)
+        self.first_good = str(first_good.text)
 
     def find_menu_categories_get_links(self):
         self.title_main_page = self.driver.title
@@ -66,7 +68,7 @@ class RozetkaMainPage(BasePage):
             EC.presence_of_element_located((
             By.XPATH, "/html/body/app-root/div/div/rz-header/\
                 rz-main-header/header/div/div/ul/li[3]/rz-user/button")))
-        authorization_button.click()
+        self.action.pause(2).click(on_element=authorization_button).perform()
 
         self.popup_authorization = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
