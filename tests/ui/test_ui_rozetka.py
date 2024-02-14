@@ -4,7 +4,7 @@ from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_search_field_working():
     rozetka = RozetkaMainPage()
     rozetka.find_search_field_and_send_request()
@@ -15,7 +15,7 @@ def test_search_field_working():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_links_of_menu_categories_not_broken():
     rozetka = RozetkaMainPage()
     for link in rozetka.find_menu_categories_get_links():
@@ -25,7 +25,7 @@ def test_links_of_menu_categories_not_broken():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_authorization_menu_if_all_icons_displayed():
     rozetka = RozetkaMainPage()
     rozetka.find_authorization_menu()
@@ -38,7 +38,7 @@ def test_authorization_menu_if_all_icons_displayed():
 
     rozetka.driver.close()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_icons_of_social_networks_on_main_page_is_displayed():
     rozetka = RozetkaMainPage()
 
@@ -47,7 +47,7 @@ def test_icons_of_social_networks_on_main_page_is_displayed():
     
     rozetka.driver.close()
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_check_prices_sales_laptop():
     rozetka = RozetkaLaptopsPage()
     rozetka.comparison_prices(3)
@@ -62,7 +62,7 @@ def test_check_prices_sales_laptop():
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_select_sorting_from_high_to_low_price():
     quantity_of_tests = 3
     rozetka = RozetkaLaptopsPage()

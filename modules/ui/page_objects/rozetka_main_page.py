@@ -22,7 +22,6 @@ class RozetkaMainPage(BasePage):
         # click on buy button on the goods page etc.).
         self.action = ActionChains(self.driver)
 
-    # Method is used for following links during tests performing.
     def go_to(self, link):
         self.driver.get(link)
 
