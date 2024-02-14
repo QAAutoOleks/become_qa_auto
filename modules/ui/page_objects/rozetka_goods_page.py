@@ -6,7 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-class RozetkaGoodsPage(BasePage):
+class RozetkaGoodsPage(RozetkaMainPage):
 
     def __init__(self):
         super().__init__()

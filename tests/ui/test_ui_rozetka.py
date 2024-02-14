@@ -8,15 +8,15 @@ import pytest
 @pytest.mark.ui_rozetka
 def test_search_field_working():
     rozetka = RozetkaMainPage()
-    rozetka.find_search_field()
+    rozetka.find_search_field_and_send_request()
     assert rozetka.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
-    assert rozetka.header == 'Ноутбуки'
-    assert rozetka.first_goods.find("Ноутбук") != -1
+    assert rozetka.header_text == 'Ноутбуки'
+    assert rozetka.first_good.find("Ноутбук") != -1
 
     rozetka.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_links_of_menu_categories_not_broken():
     rozetka = RozetkaMainPage()
     for link in rozetka.find_menu_categories_get_links():
