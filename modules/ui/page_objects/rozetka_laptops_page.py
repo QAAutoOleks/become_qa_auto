@@ -10,6 +10,11 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def __init__(self, link='https://rozetka.com.ua/ua/'):
         super().__init__(link='https://rozetka.com.ua/ua/notebooks/c80004/')
 
+    # Method finds prices for any number of goods in catalogs. 
+    # Required quantity of goods ('quantity_of_tests') 
+    # is set depending on the needs.
+    # Method is used in tests of changing prices after 
+    # filters application, promotional prices.
     def finding_prices_on_page(self, quantity_of_tests):
         self.action.pause(2).perform()
         self.goods_list = self.driver.find_elements(
