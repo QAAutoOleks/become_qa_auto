@@ -14,15 +14,15 @@ class RozetkaLaptopsPage(RozetkaMainPage):
         self.action = ActionChains(self.driver)
 
     def finding_prices_on_page(self, quantity_of_tests):
-        time.sleep(3)
+        self.action.pause(2).perform()
         self.goods_list = self.driver.find_elements(
             By.XPATH, "//div[@class='goods-tile__content']")
-        print(len(self.goods_list))
         self.old_prices_list = []
         self.new_prices_list = []
 
         counter_of_goods_tests = 0
         for element in self.goods_list:
+            self.driver.implicitly_wait(2)
             index_search = element.text.find('₴')
             old_price = element.text[index_search-7:index_search]
 

@@ -70,13 +70,11 @@ def test_select_sorting_from_high_to_low_price():
     rozetka = RozetkaLaptopsPage()
     rozetka.finding_prices_on_page(quantity_of_tests)
     price_before_sorting = rozetka.new_prices_list
-    print(price_before_sorting)
 
     rozetka.select_sorting()
 
     rozetka.finding_prices_on_page(quantity_of_tests)
     price_after_sorting = rozetka.new_prices_list
-    print(price_after_sorting)
 
     assert price_before_sorting != price_after_sorting
 
