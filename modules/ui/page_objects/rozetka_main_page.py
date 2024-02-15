@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
-import time
 
 
 class RozetkaMainPage(BasePage):
@@ -91,8 +90,8 @@ class RozetkaMainPage(BasePage):
             EC.presence_of_element_located((
                 By.XPATH, "/html/body/app-root/div/div/rz-header/\
                 rz-main-header/header/div/div/ul/li[3]/rz-user/button")))
-        self.action.pause(1).click(
-            on_element=authorization_button).pause(1).perform()
+        self.action.pause(2).click(
+            on_element=authorization_button).pause(2).perform()
 
         self.popup_authorization = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
@@ -114,7 +113,7 @@ class RozetkaMainPage(BasePage):
                 div[3]/div[2]")
 
     def find_social_networks_icons(self):
-        time.sleep(1)
+        self.action.pause(2).perform()
         all_socials_networks_icons = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
                 By.CLASS_NAME, "socials__list")))

@@ -1,6 +1,10 @@
 import pytest
 from modules.api.clients.github import GitHub
 from modules.api.clients.petstore import PetStore
+from modules.ui.page_objects.base_page import BasePage
+from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
+from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
+from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 
 
 class User:
@@ -40,3 +44,24 @@ def petstore_api():
     pet_store = PetStore()
 
     yield pet_store
+
+
+@pytest.fixture
+def rozetka_main_page():
+    rozetka_main_page = RozetkaMainPage()
+
+    yield rozetka_main_page
+
+
+@pytest.fixture
+def rozetka_laptops_page():
+    rozetka_laptops_page = RozetkaLaptopsPage()
+
+    yield rozetka_laptops_page
+
+
+@pytest.fixture
+def rozetka_goods_page():
+    rozetka_goods_page = RozetkaGoodsPage()
+
+    yield rozetka_goods_page
