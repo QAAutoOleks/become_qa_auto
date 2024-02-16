@@ -5,6 +5,7 @@ from modules.ui.page_objects.base_page import BasePage
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
+from modules.common.database import Database
 
 
 class User:
@@ -65,3 +66,9 @@ def rozetka_goods_page():
     rozetka_goods_page = RozetkaGoodsPage()
 
     yield rozetka_goods_page
+
+@pytest.fixture
+def database_tests():
+    database = Database()
+
+    yield database
