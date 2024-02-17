@@ -99,14 +99,14 @@ def test_delete_order(database_tests):
 
 @pytest.mark.database
 def test_insert_invalid_data_types_in_order(database_tests):
-    try:
+    with pytest.raises(Exception) as excinfo:
         database_tests.insert_product(11, 'печиво', 'солодке', 'Thirty')
-    except sqlite3.OperationalError as e:
-        assert str(e) == "no such column: Thirty"
+
+    assert "no such column: Thirty" in str(excinfo.value)
 
 @pytest.mark.database
 def test_insert_order_when_quantity_of_products_not_enough(database_tests):
-    try:
+    with pytest.raises(Exception) as excinfo:
         database_tests.insert_in_orders_method('солодка вода', 30, 1, 1)
-    except sqlite3.IntegrityError as e:
-        assert str(e) == 'CHECK constraint failed: quantity >= 0'
+
+    assert 'CHECK constraint failed: quantity >= 0' in str(excinfo.value)
