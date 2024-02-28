@@ -3,6 +3,7 @@ import sqlite3
 from datetime import date
 
 
+
 @pytest.mark.database
 def test_database_connection(database_tests):
     database_tests.testing_connection()
