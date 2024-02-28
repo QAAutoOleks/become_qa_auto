@@ -1,7 +1,6 @@
 import pytest
 import sqlite3
 from datetime import date
-from modules.common.database import Database
 
 
 @pytest.mark.database
