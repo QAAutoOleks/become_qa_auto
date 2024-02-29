@@ -1,7 +1,6 @@
 import pytest
 from modules.api.clients.github import GitHub
 from modules.api.clients.petstore import PetStore
-from modules.ui.page_objects.base_page import BasePage
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage

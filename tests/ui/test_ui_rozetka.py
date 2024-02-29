@@ -4,7 +4,7 @@ from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_search_field_working(rozetka_main_page):
     rozetka_main_page.find_search_field_and_send_request()
     assert rozetka_main_page.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
