@@ -24,7 +24,8 @@ class RozetkaGoodsPage(RozetkaMainPage):
     def find_price_in_popup_window_cart(self):
         self.action.pause(2).perform()
         price_in_cart = self.driver.find_element(
-            By.CSS_SELECTOR, '.cart-product__price--red')
+            By.CSS_SELECTOR, '.cart-receipt__sum-price'
+        )
 
         price_in_cart_int = RozetkaGoodsPage.convert_str_to_int(
             self, price_in_cart.text)
@@ -39,33 +40,22 @@ class RozetkaGoodsPage(RozetkaMainPage):
 
     def change_quantity_in_cart(self):
         self.plus_button_in_cart_window = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
-                    ul/li/rz-cart-product/div/div[2]/\
-                        rz-cart-counter/div/button[2]")
+            By.CSS_SELECTOR, '[data-testid="cart-counter-increment-button"]'
+        )
         self.minus_button_in_cart_window = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
-                    ul/li/rz-cart-product/div/div[2]/\
-                        rz-cart-counter/div/button[1]")
+            By.CSS_SELECTOR, '[data-testid="cart-counter-decrement-button"]'
+        )
 
     def add_extra_services(self):
-        checkbox_guarantee_services = self.driver.find_element(
-            By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
-            rz-product-main-info/rz-product-services/div/\
-                rz-additional-services/div/rz-service-group[1]/\
-                    div/div/label'
+        checkbox_extra_services = self.driver.find_element(
+            By.CSS_SELECTOR, '[for="serviceGroup2614_0"]'
         )
-        checkbox_guarantee_services.click()
+        checkbox_extra_services.click()
 
     def find_price_of_extra_service_guarantee(self):
         price_of_extra_service = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-shopping-cart/div/rz-purchases/\
-                    ul/li/rz-cart-product/div/rz-cart-additional-services/\
-                        div/rz-additional-services/div/rz-service-group[1]/\
-                            div/ul/li[1]/rz-service-product/div/div/label/\
-                                div/div[2]/div")
+            By.CSS_SELECTOR, '[_ngcontent-rz-client-c1606784706=""]'
+        )
         price_int = RozetkaGoodsPage.convert_str_to_int(
             self, price_of_extra_service.text)
 

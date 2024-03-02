@@ -112,7 +112,7 @@ def test_changing_price_range_by_fiters(rozetka_laptops_page):
     rozetka_laptops_page.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_price_in_goods_page_and_at_cart_popup(rozetka_goods_page):
     price_on_page = rozetka_goods_page.find_price_goods_page()
     rozetka_goods_page.find_and_click_to_buy_button()
