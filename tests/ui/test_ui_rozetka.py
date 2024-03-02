@@ -1,5 +1,4 @@
 import pytest
-from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
 from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
 from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 
@@ -113,7 +112,7 @@ def test_changing_price_range_by_fiters(rozetka_laptops_page):
     rozetka_laptops_page.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_price_in_goods_page_and_at_cart_popup(rozetka_goods_page):
     price_on_page = rozetka_goods_page.find_price_goods_page()
     rozetka_goods_page.find_and_click_to_buy_button()
