@@ -36,7 +36,6 @@ class RozetkaGoodsPage(RozetkaMainPage):
             By.CSS_SELECTOR, '.product-button__buy')
 
         self.action.pause(1).click(on_element=button_to_buy).pause(2).perform()
-        #
 
     def change_quantity_in_cart(self):
         self.plus_button_in_cart_window = self.driver.find_element(
