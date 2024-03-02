@@ -71,9 +71,7 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def select_sorting(self):
         sorting_button = Select(WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.XPATH, "/html/body/app-root/div/div/\
-                rz-category/div/main/rz-catalog/div/\
-                    rz-catalog-settings/div/rz-sort/select"))))
+                By.CSS_SELECTOR, ".select-css"))))
         sorting_button.select_by_visible_text("Від дорогих до дешевих")
 
     def get_titles_from_goods_tiles(self, quantity_goods):
@@ -94,40 +92,25 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def select_checkbox_brand_ASUS(self):
         checkbox = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
-                rz-catalog/div/div/aside/rz-filter-stack/div[2]/div/\
-                    rz-scrollbar/div/div[1]/div/div/rz-filter-section-autocomplete/\
-                        ul[1]/li[1]/a")))
+                By.CSS_SELECTOR, '[data-id="ASUS"]')))
 
         checkbox.click()
 
     def get_price_from_filters_field(self):
         self.range_filter_start = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.XPATH, "/html/body/app-root/div/div/rz-category/div/\
-                main/rz-catalog/div/div/aside/rz-filter-stack/div[3]/\
-                    div/rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
-                        form/fieldset/div/input[1]")))
+                By.CSS_SELECTOR, '[formcontrolname="min"]')))
         self.range_filter_finish = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
-                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
-                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
-                        form/fieldset/div/input[2]")))
+                By.CSS_SELECTOR, '[formcontrolname="max"]')))
 
     def changing_price_range_by_slider_filter(self):
         slider_start = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
-                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
-                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
-                        form/rz-range-slider/div/div/button[2]")))
+            By.CSS_SELECTOR, '.rz-slider__range-button_type_right')))
         slider_finish = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
-                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
-                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
-                        form/rz-range-slider/div/div/button[1]")))
+            By.CSS_SELECTOR, '.rz-slider__range-button_type_left')))
 
         self.action.move_to_element(slider_start).drag_and_drop(
             slider_start, slider_finish)
@@ -137,10 +120,7 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def click_ok_button_in_fiters(self):
         ok_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.XPATH, "/html/body/app-root/div/div/rz-category/div/main/\
-                rz-catalog/div/div/aside/rz-filter-stack/div[3]/div/\
-                    rz-scrollbar/div/div[1]/div/div/rz-filter-slider/\
-                        form/fieldset/div/button")))
+            By.CSS_SELECTOR, '.slider-filter__button')))
         self.action.click(on_element=ok_button)
         self.action.pause(1)
         self.action.perform()

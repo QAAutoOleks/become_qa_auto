@@ -43,7 +43,7 @@ def test_icons_of_social_networks_on_main_page_is_displayed(rozetka_main_page):
     rozetka_main_page.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop(rozetka_laptops_page):
     rozetka_laptops_page.comparison_prices(3)
     rozetka_laptops_page.finding_prices_on_page(3)
@@ -93,7 +93,7 @@ def test_checkbox_filter_by_brand(rozetka_laptops_page):
     rozetka_laptops_page.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_changing_price_range_by_fiters(rozetka_laptops_page):
     rozetka_laptops_page.get_price_from_filters_field()
     rozetka_laptops_page.changing_price_range_by_slider_filter()
