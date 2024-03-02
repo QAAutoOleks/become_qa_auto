@@ -1,4 +1,5 @@
 from modules.ui.page_objects.rozetka_main_page import RozetkaMainPage
+from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -60,12 +61,8 @@ class RozetkaLaptopsPage(RozetkaMainPage):
         counter_of_goods_tests = 0
         for link in self.links_on_goods:
             RozetkaLaptopsPage.go_to(self, link)
-            price_on_goods_page = self.driver.find_element(
-                By.XPATH, '//*[@id="#scrollArea"]/div[1]/div[2]/\
-                    rz-product-main-info/div[1]/div[1]/div[1]/p[2]')
-            price = price_on_goods_page.text[:6]
-            price_after_sorting = price_on_goods_page.text[:]
-            self.prices_on_goods_pages_list.append(price.replace(" ", ""))
+            price_on_goods_page = RozetkaGoodsPage.find_price_goods_page(self)
+            self.prices_on_goods_pages_list.append(price_on_goods_page)
 
             counter_of_goods_tests += 1
             if counter_of_goods_tests == quantity_of_tests:
@@ -84,7 +81,6 @@ class RozetkaLaptopsPage(RozetkaMainPage):
         self.action.pause(2).perform()
         goods_list = self.driver.find_elements(
             By.XPATH, "//span[@class='goods-tile__title']")
-        brands_name_inside_title = ""
         index = 0
         for element in goods_list:
             brands_name_inside_title = element.text

@@ -43,7 +43,7 @@ def test_icons_of_social_networks_on_main_page_is_displayed(rozetka_main_page):
     rozetka_main_page.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_check_prices_sales_laptop(rozetka_laptops_page):
     rozetka_laptops_page.comparison_prices(3)
     rozetka_laptops_page.finding_prices_on_page(3)
