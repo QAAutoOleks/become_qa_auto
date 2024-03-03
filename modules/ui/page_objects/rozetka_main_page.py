@@ -92,20 +92,13 @@ class RozetkaMainPage(BasePage):
             EC.presence_of_element_located((
                 By.XPATH, "//div[@class='modal__content']")))
         self.popup_authorization_facebook = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-user-identification/rz-auth/div/\
-                    div/div/rz-social-auth/button[1]")
+            By.XPATH, "//*[contains(text(), 'Facebook')]")
         self.popup_authorization_google = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-user-identification/rz-auth/div/\
-                    div/div/rz-social-auth/button[1]")
+            By.XPATH, '(//button[normalize-space()="Google"])[1]')
         self.remind_password = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]/rz-user-identification/rz-auth/div/\
-                    form/fieldset/div[3]/a")
+            By.CSS_SELECTOR, '.auth-modal__restore-link')
         self.popup_remind_password = self.driver.find_element(
-            By.XPATH, "/html/body/app-root/rz-single-modal-window/\
-                div[3]/div[2]")
+            By.CSS_SELECTOR, '.modal__holder_show_animation')
 
     def find_social_networks_icons(self):
         self.action.pause(2).perform()

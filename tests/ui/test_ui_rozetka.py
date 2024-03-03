@@ -23,7 +23,7 @@ def test_links_of_menu_categories_not_broken(rozetka_main_page):
     rozetka_main_page.driver.close()
 
 
-@pytest.mark.ui_rozetka
+@pytest.mark.ui_not_ready
 def test_authorization_menu_if_all_icons_displayed(rozetka_main_page):
     rozetka_main_page.find_authorization_menu()
     assert rozetka_main_page.popup_authorization.is_displayed()
