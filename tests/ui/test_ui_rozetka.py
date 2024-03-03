@@ -8,7 +8,8 @@ def test_search_field_working(rozetka_main_page):
     rozetka_main_page.find_search_field_and_send_request()
     assert rozetka_main_page.driver.title == 'Ноутбуки - ROZETKA | Купити ноутбук в Києві: ціна, відгуки, продаж, вибір ноутбуків в Україні'
     assert rozetka_main_page.header_text == 'Ноутбуки'
-    assert "Ноутбук" in rozetka_main_page.first_good
+    assert "Ноутбук" in rozetka_main_page.first_product_text
+    assert "Ноутбук" in rozetka_main_page.second_product_text
 
     rozetka_main_page.driver.close()
 
@@ -93,7 +94,7 @@ def test_checkbox_filter_by_brand(rozetka_laptops_page):
     rozetka_laptops_page.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_changing_price_range_by_fiters(rozetka_laptops_page):
     rozetka_laptops_page.get_price_from_filters_field()
     rozetka_laptops_page.changing_price_range_by_slider_filter()

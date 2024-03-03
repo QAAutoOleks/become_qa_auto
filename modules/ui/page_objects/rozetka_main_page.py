@@ -51,23 +51,18 @@ class RozetkaMainPage(BasePage):
                 By.CSS_SELECTOR, "input[placeholder='Я шукаю...']")))
         search_feald.send_keys('laptop')
         button = self.driver.find_element(
-            By.XPATH, "//button[contains(text(),'Знайти')]")
+            By.CSS_SELECTOR, ".search-form__submit")
         button.click()
 
         header = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "/html/body/app-root/div/\
-                div/rz-category/div/main/div[1]/div/h1")))
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.catalog-heading')))
         self.header_text = header.text
 
-        first_good = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((
-                By.XPATH, "/html[1]/body[1]/app-root[1]/div[1]/div[1]\
-                /rz-category[1]/div[1]/main[1]/rz-catalog[1]/div[1]\
-                    /div[1]/section[1]/rz-grid[1]/ul[1]/li[1]\
-                        /rz-catalog-tile[1]/app-goods-tile-default[1]\
-                            /div[1]/div[2]/div[1]/rz-button-product-page[2]/a[1]"
-            )))
-        self.first_good = str(first_good.text)
+        goods_titles = self.driver.find_elements(
+            By.CSS_SELECTOR, '.goods-tile__title'
+        )
+        self.first_product_text = goods_titles[0].text
+        self.second_product_text = goods_titles[1].text
 
     # Checking links of menu categories isn't broken
     def find_menu_categories_get_links(self):
