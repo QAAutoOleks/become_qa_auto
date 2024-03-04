@@ -89,10 +89,10 @@ class RozetkaLaptopsPage(RozetkaMainPage):
 
         return titles_list
 
-    def select_checkbox_brand_ASUS(self):
+    def select_checkbox_brand(self, brand):
         checkbox = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.CSS_SELECTOR, '[data-id="ASUS"]')))
+                By.CSS_SELECTOR, f'[data-id={brand}]')))
 
         checkbox.click()
 

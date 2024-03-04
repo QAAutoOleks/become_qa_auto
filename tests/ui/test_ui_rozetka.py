@@ -64,7 +64,6 @@ def test_check_prices_sales_laptop(rozetka_laptops_page):
 @pytest.mark.ui_rozetka
 def test_select_sorting_from_high_to_low_price(rozetka_laptops_page):
     quantity_of_tests = 3
-    rozetka_laptops_page = RozetkaLaptopsPage()
     rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
     price_before_sorting = rozetka_laptops_page.new_prices_list
 
@@ -82,21 +81,25 @@ def test_select_sorting_from_high_to_low_price(rozetka_laptops_page):
 
     rozetka_laptops_page.driver.close()
 
-
+# Method .get_titles_from_goods_tiles() is checking goods titles
+# and check if names of goods include brand which selected in filters - ASUS.
+# Instead of ASUS it is possible to specify another brand:
+# Acer, Apple, Dell, Gigabyte, HP etc.
+#
+# Necessary quantity of goods titles is entering in parentheses
+# depending on the needs
 @pytest.mark.ui_rozetka
 def test_checkbox_filter_by_brand(rozetka_laptops_page):
-    rozetka_laptops_page.select_checkbox_brand_ASUS()
+    brand_name = 'ASUS'
+    rozetka_laptops_page.select_checkbox_brand(brand_name)
 
-    # Method .get_titles_from_goods_tiles() is checking goods titles
-    # and check if names of goods include brand which selected in filters ('ASUS').
-    # Necessary quantity of goods titles is entering in parentheses
-    # depending on the needs
-    for brand in rozetka_laptops_page.get_titles_from_goods_tiles(5):
-        assert brand.find('ASUS') != -1
+    for brand_from_title in rozetka_laptops_page.get_titles_from_goods_tiles(5):
+        assert brand_name in brand_from_title
 
     rozetka_laptops_page.driver.close()
 
-
+# quantity of goods required to be tested is flexible
+# finding_prices_on_page(3)
 @pytest.mark.ui_rozetka
 def test_changing_price_range_by_fiters(rozetka_laptops_page):
     rozetka_laptops_page.get_price_from_filters_field()
@@ -109,7 +112,7 @@ def test_changing_price_range_by_fiters(rozetka_laptops_page):
 
     rozetka_laptops_page.click_ok_button_in_fiters()
 
-    rozetka_laptops_page.finding_prices_on_page(1)
+    rozetka_laptops_page.finding_prices_on_page(3)
     element = rozetka_laptops_page.range_filter_finish
     assert rozetka_laptops_page.new_prices_list[0] <= int(value_from_field)
 
