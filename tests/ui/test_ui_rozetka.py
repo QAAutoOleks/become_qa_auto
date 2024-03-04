@@ -23,7 +23,7 @@ def test_links_of_menu_categories_not_broken(rozetka_main_page):
     rozetka_main_page.driver.close()
 
 
-@pytest.mark.ui_not_ready
+@pytest.mark.ui_rozetka
 def test_authorization_menu_if_all_icons_displayed(rozetka_main_page):
     rozetka_main_page.find_authorization_menu()
     assert rozetka_main_page.popup_authorization.is_displayed()
@@ -43,11 +43,13 @@ def test_icons_of_social_networks_on_main_page_is_displayed(rozetka_main_page):
 
     rozetka_main_page.driver.close()
 
-
+# quantity of goods required to be tested is flexible
+# quantity_of_tests = 3
 @pytest.mark.ui_rozetka
 def test_check_prices_sales_laptop(rozetka_laptops_page):
-    rozetka_laptops_page.comparison_prices(3)
-    rozetka_laptops_page.finding_prices_on_page(3)
+    quantity_of_tests = 3
+    rozetka_laptops_page.comparison_prices(quantity_of_tests)
+    rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
 
     index = 0
     for price in rozetka_laptops_page.new_prices_list:
@@ -57,7 +59,8 @@ def test_check_prices_sales_laptop(rozetka_laptops_page):
 
     rozetka_laptops_page.driver.close()
 
-
+# quantity of goods required to be tested is flexible
+# quantity_of_tests = 3
 @pytest.mark.ui_rozetka
 def test_select_sorting_from_high_to_low_price(rozetka_laptops_page):
     quantity_of_tests = 3
@@ -124,8 +127,7 @@ def test_price_in_goods_page_and_at_cart_popup(rozetka_goods_page):
 
 
 @pytest.mark.ui_rozetka
-def test_change_quantity_of_goods_in_cart():
-    rozetka_goods_page = RozetkaGoodsPage()
+def test_change_quantity_of_goods_in_cart(rozetka_goods_page):
     rozetka_goods_page.find_and_click_to_buy_button()
     rozetka_goods_page.change_quantity_in_cart()
     price_in_cart = rozetka_goods_page.find_price_in_popup_window_cart()
@@ -152,3 +154,6 @@ def test_adding_extra_services_guarantee(rozetka_goods_page):
     assert price_of_extra_service + price_on_page == changed_price
 
     rozetka_goods_page.driver.close()
+
+
+

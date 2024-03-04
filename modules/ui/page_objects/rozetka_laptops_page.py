@@ -27,13 +27,13 @@ class RozetkaLaptopsPage(RozetkaMainPage):
         for element in self.goods_list:
             self.driver.implicitly_wait(2)
             index_search = element.text.find('₴')
-            old_price = element.text[index_search-7:index_search]
+            old_price = element.text[index_search - 7:index_search]
 
             old_price_int = RozetkaMainPage.convert_str_to_int(
                 self, old_price)
             self.old_prices_list.append(old_price_int)
 
-            new_price = element.text[index_search+1:index_search+9]
+            new_price = element.text[index_search + 1:index_search + 9]
             new_price_int = RozetkaMainPage.convert_str_to_int(
                 self, new_price)
 
@@ -107,10 +107,10 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def changing_price_range_by_slider_filter(self):
         slider_start = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.CSS_SELECTOR, '.rz-slider__range-button_type_right')))
+                By.CSS_SELECTOR, '.rz-slider__range-button_type_right')))
         slider_finish = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.CSS_SELECTOR, '.rz-slider__range-button_type_left')))
+                By.CSS_SELECTOR, '.rz-slider__range-button_type_left')))
 
         self.action.move_to_element(slider_start).drag_and_drop(
             slider_start, slider_finish)
@@ -120,7 +120,8 @@ class RozetkaLaptopsPage(RozetkaMainPage):
     def click_ok_button_in_fiters(self):
         ok_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-            By.CSS_SELECTOR, '.slider-filter__button')))
+                By.CSS_SELECTOR, '.slider-filter__button')))
         self.action.click(on_element=ok_button)
         self.action.pause(1)
         self.action.perform()
+
