@@ -10,7 +10,8 @@ class RozetkaGoodsPage(RozetkaMainPage):
     def find_price_goods_page(self):
         self.action.pause(2).perform()
         price = self.driver.find_element(
-            By.CSS_SELECTOR, '.product-price__big-color-red')
+            By.CSS_SELECTOR, '.product-price__big-color-red'
+        )
 
         old_price_int = RozetkaGoodsPage.convert_str_to_int(
             self, price.text)
@@ -30,7 +31,8 @@ class RozetkaGoodsPage(RozetkaMainPage):
 
     def find_and_click_to_buy_button(self):
         button_to_buy = self.driver.find_element(
-            By.CSS_SELECTOR, '.product-button__buy')
+            By.CSS_SELECTOR, '.product-button__buy'
+        )
 
         self.action.pause(1).click(on_element=button_to_buy).pause(2).perform()
 
