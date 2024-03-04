@@ -1,6 +1,4 @@
 import pytest
-from modules.ui.page_objects.rozetka_laptops_page import RozetkaLaptopsPage
-from modules.ui.page_objects.rozetka_goods_page import RozetkaGoodsPage
 
 
 @pytest.mark.ui_rozetka
