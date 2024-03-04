@@ -41,7 +41,9 @@ class RozetkaGoodsPage(RozetkaMainPage):
         self.minus_button_in_cart_window = self.driver.find_element(
             By.CSS_SELECTOR, '[data-testid="cart-counter-decrement-button"]'
         )
-
+    # Method adds extra services to cart with product
+    # for next verification changes total amount of purchase
+    # displayed in cart
     def add_extra_services(self):
         checkbox_extra_services = self.driver.find_element(
             By.CSS_SELECTOR, '[for="serviceGroup2614_0"]'
