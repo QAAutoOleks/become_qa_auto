@@ -83,8 +83,7 @@ class RozetkaMainPage(BasePage):
     def find_authorization_menu(self):
         authorization_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
-                By.XPATH, "/html/body/app-root/div/div/rz-header/\
-                rz-main-header/header/div/div/ul/li[3]/rz-user/button")))
+                By.XPATH, "//rz-user[@_ngcontent-rz-client-c271359985]/button")))
         self.action.pause(2).click(
             on_element=authorization_button).pause(2).perform()
 
