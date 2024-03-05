@@ -52,9 +52,12 @@ class RozetkaGoodsPage(RozetkaMainPage):
         )
         checkbox_extra_services.click()
 
-    def find_price_of_extra_service_guarantee(self):
-        price_of_extra_service = self.driver.find_element(
-            By.CSS_SELECTOR, '[_ngcontent-rz-client-c1606784706=""]'
+    def find_price_of_extra_service(self):
+        extra_service_label = self.driver.find_element(
+            By.CSS_SELECTOR, '.service-product__label'
+        )
+        price_of_extra_service = extra_service_label.find_element(
+            By.CSS_SELECTOR, '.service-product__price'
         )
         price_int = RozetkaGoodsPage.convert_str_to_int(
             self, price_of_extra_service.text)

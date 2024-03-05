@@ -150,7 +150,7 @@ def test_adding_extra_services_guarantee(rozetka_goods_page):
     rozetka_goods_page.add_extra_services()
     rozetka_goods_page.find_and_click_to_buy_button()
     changed_price = rozetka_goods_page.find_price_in_popup_window_cart()
-    price_of_extra_service = rozetka_goods_page.find_price_of_extra_service_guarantee()
+    price_of_extra_service = rozetka_goods_page.find_price_of_extra_service()
 
     assert price_of_extra_service + price_on_page == changed_price
 
