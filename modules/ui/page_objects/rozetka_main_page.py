@@ -46,10 +46,10 @@ class RozetkaMainPage(BasePage):
     # the page, checking the page header and 
     # goods name in catalog.
     def find_search_field_and_send_request(self):
-        search_feald = WebDriverWait(self.driver, 10).until(
+        search_field = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR, "input[placeholder='Я шукаю...']")))
-        search_feald.send_keys('laptop')
+        search_field.send_keys('laptop')
         button = self.driver.find_element(
             By.CSS_SELECTOR, ".search-form__submit")
         button.click()
