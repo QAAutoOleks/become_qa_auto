@@ -58,24 +58,29 @@ def test_check_prices_sales_laptop(rozetka_laptops_page):
     rozetka_laptops_page.driver.close()
 
 # quantity of goods required to be tested is flexible
-# quantity_of_tests = 3
+# quantity_of_tests = 5
 @pytest.mark.ui_rozetka
-def test_select_sorting_from_high_to_low_price(rozetka_laptops_page):
-    quantity_of_tests = 3
-    rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
-    price_before_sorting = rozetka_laptops_page.new_prices_list
+def test_select_sorting_by_price(rozetka_laptops_page):
+    quantity_of_tests = 5
 
-    rozetka_laptops_page.select_sorting()
+    rozetka_laptops_page.select_sorting("Від дорогих до дешевих")
 
     rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
     price_after_sorting = rozetka_laptops_page.new_prices_list
-
-    assert price_before_sorting != price_after_sorting
 
     index = 0
     if len(price_after_sorting) > 1:
         for i in range(1, quantity_of_tests):
             assert price_after_sorting[i] < price_after_sorting[i-1]
+
+    rozetka_laptops_page.select_sorting("Від дешевих до дорогих")
+
+    rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
+    price_after_sorting = rozetka_laptops_page.new_prices_list
+
+    if len(price_after_sorting) > 1:
+        for i in range(1, quantity_of_tests):
+            assert price_after_sorting[i] >= price_after_sorting[i-1]
 
     rozetka_laptops_page.driver.close()
 

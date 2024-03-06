@@ -68,11 +68,11 @@ class RozetkaLaptopsPage(RozetkaMainPage):
             if counter_of_goods_tests == quantity_of_tests:
                 break
 
-    def select_sorting(self):
+    def select_sorting(self, sort):
         sorting_button = Select(WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR, ".select-css"))))
-        sorting_button.select_by_visible_text("Від дорогих до дешевих")
+        sorting_button.select_by_visible_text(sort)
 
     def get_titles_from_goods_tiles(self, quantity_goods):
         titles_list = []
