@@ -41,6 +41,7 @@ def test_icons_of_social_networks_on_main_page_is_displayed(rozetka_main_page):
 
     rozetka_main_page.driver.close()
 
+
 # quantity of goods required to be tested is flexible
 # quantity_of_tests = 3
 @pytest.mark.ui_rozetka
@@ -57,6 +58,7 @@ def test_check_prices_sales_laptop(rozetka_laptops_page):
 
     rozetka_laptops_page.driver.close()
 
+
 # quantity of goods required to be tested is flexible
 # quantity_of_tests = 5
 @pytest.mark.ui_rozetka
@@ -66,22 +68,24 @@ def test_select_sorting_by_price(rozetka_laptops_page):
     rozetka_laptops_page.select_sorting("Від дорогих до дешевих")
 
     rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
-    price_after_sorting = rozetka_laptops_page.new_prices_list
+    price_down_list = rozetka_laptops_page.new_prices_list
 
-    if len(price_after_sorting) > 1:
+    if len(price_down_list) > 1:
         for i in range(1, quantity_of_tests):
-            assert price_after_sorting[i] < price_after_sorting[i-1]
+            assert price_down_list[i] < price_down_list[i - 1]
 
     rozetka_laptops_page.select_sorting("Від дешевих до дорогих")
 
     rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
-    price_after_sorting = rozetka_laptops_page.new_prices_list
+    price_up_list = rozetka_laptops_page.new_prices_list
 
-    if len(price_after_sorting) > 1:
+    if len(price_up_list) > 1:
         for i in range(1, quantity_of_tests):
-            assert price_after_sorting[i] >= price_after_sorting[i-1]
+            assert (price_up_list[i] >= price_up_list[i - 1] and
+                    price_up_list[i] < price_down_list[i])
 
     rozetka_laptops_page.driver.close()
+
 
 # Method .get_titles_from_goods_tiles() is checking goods titles
 # and check if names of goods include brand which selected in filters - ASUS.
@@ -99,6 +103,7 @@ def test_checkbox_filter_by_brand(rozetka_laptops_page):
         assert brand_name in brand_from_title
 
     rozetka_laptops_page.driver.close()
+
 
 # quantity of goods required to be tested is flexible
 # finding_prices_on_page(3)
@@ -159,6 +164,3 @@ def test_adding_extra_services_guarantee(rozetka_goods_page):
     assert price_of_extra_service + price_on_page == changed_price
 
     rozetka_goods_page.driver.close()
-
-
-
