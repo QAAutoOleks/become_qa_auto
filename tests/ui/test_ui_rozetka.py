@@ -68,7 +68,6 @@ def test_select_sorting_by_price(rozetka_laptops_page):
     rozetka_laptops_page.finding_prices_on_page(quantity_of_tests)
     price_after_sorting = rozetka_laptops_page.new_prices_list
 
-    index = 0
     if len(price_after_sorting) > 1:
         for i in range(1, quantity_of_tests):
             assert price_after_sorting[i] < price_after_sorting[i-1]
