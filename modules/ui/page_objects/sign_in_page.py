@@ -1,4 +1,4 @@
-from modules.ui.page_objects.base_page import BasePage
+from .base_page import BasePage #.base_page because sign_in_page and base_page in the same directory
 from selenium.webdriver.common.by import By
 
 
